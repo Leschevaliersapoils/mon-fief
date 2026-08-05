@@ -1,21 +1,45 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-    <meta charset="utf-8">
-    <title>Redirection...</title>
-    <script>
-        // Redirige n'importe quelle URL 404 vers l'index de ton site avec les paramètres
-        var pathSegmentsToKeep = 1; // Garde '/mon-fief/'
-        var l = window.location;
-        l.replace(
-            l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
-            l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?p=/' +
-            l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
-            (l.search ? '&q=' + l.search.slice(1).replace(/&/g, '~and~') : '') +
-            l.hash
-        );
-    </script>
-</head>
-<body>
-</body>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="text-scale" content="scale" />
+        
+        <!-- Ajout de la police médiévale Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+
+        <link href="/mon-fief/_app/immutable/entry/start.B99_xER8.js" rel="modulepreload">
+		<link href="/mon-fief/_app/immutable/chunks/DTi7YcbS.js" rel="modulepreload">
+		<link href="/mon-fief/_app/immutable/chunks/BGcuH54R.js" rel="modulepreload">
+		<link href="/mon-fief/_app/immutable/entry/app.DRIZIIeX.js" rel="modulepreload">
+		<link href="/mon-fief/_app/immutable/chunks/C8Qz27k1.js" rel="modulepreload">
+		<link href="/mon-fief/_app/immutable/chunks/S-KyrcF8.js" rel="modulepreload">
+		<link href="/mon-fief/_app/immutable/nodes/0.DEphSBR6.js" rel="modulepreload">
+		<link href="/mon-fief/_app/immutable/chunks/DrFEN1Aq.js" rel="modulepreload">
+		
+		<link href="/mon-fief/_app/immutable/assets/0.Du2P29lq.css" rel="stylesheet">
+    </head>
+    <body data-sveltekit-preload-data="hover">
+        <div style="display: contents">
+			<script>
+				{
+					__sveltekit_1yyiett = {
+						base: "/mon-fief",
+						assets: "/mon-fief"
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("/mon-fief/_app/immutable/entry/start.B99_xER8.js"),
+						import("/mon-fief/_app/immutable/entry/app.DRIZIIeX.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element);
+					});
+				}
+			</script>
+		</div>
+    </body>
 </html>
