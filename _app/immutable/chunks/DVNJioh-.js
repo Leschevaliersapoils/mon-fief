@@ -1,0 +1,1 @@
+import{Q as e}from"./BGcuH54R.js";e();

@@ -1,0 +1,1 @@
+import{C as e,T as t}from"../chunks/BGcuH54R.js";import"../chunks/S-KyrcF8.js";import"../chunks/DVNJioh-.js";var n=t(`<div class="page-quete svelte-1q9lels"><div class="container svelte-1q9lels"></div></div>`);function r(t){e(t,n())}export{r as component};
