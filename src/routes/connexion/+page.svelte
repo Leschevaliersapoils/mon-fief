@@ -1,11 +1,12 @@
 <script lang="ts">
+  import { base } from '$app/paths';
   import { enhance } from '$app/forms';
   
-  // Syntaxe Svelte 5 pour récupérer les erreurs du serveur
+ 
   let { form } = $props();
 </script>
 
-<div class="form-container">
+<div class="form-container" style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('{base}/Fondaccueil.jpg');">
   <form method="POST" use:enhance>
     <h1>Ravi de vous revoir</h1>
     <p>Entrez vos identifiants pour retrouver votre écurie.</p>
@@ -30,9 +31,9 @@
     <button type="submit" class="btn-submit">Entrer dans le Donjon 🏰</button>
     
     <div class="footer-links">
-      <a href="/inscription" class="link">Pas encore chevalier ? S'inscrire</a>
+      <a href="{base}/inscription" class="link">Pas encore chevalier ? S'inscrire</a>
       <br />
-      <a href="/" class="back-link">Retour au château</a>
+      <a href="{base}/" class="back-link">Retour au château</a>
     </div>
   </form>
 </div>
@@ -43,7 +44,6 @@
   .form-container {
     min-height: 100vh;
     width: 100vw;
-    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/Fondaccueil.jpg');
     background-size: cover;
     background-position: center;
     display: flex;

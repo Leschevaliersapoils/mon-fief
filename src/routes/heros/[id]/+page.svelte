@@ -1,5 +1,6 @@
 <script lang="ts">
-import { supabase } from '$lib/supabase';
+    import { base } from '$app/paths';
+    import { supabase } from '$lib/supabase';
     let { data } = $props();
 
     let hero = $state({ 
@@ -27,7 +28,7 @@ import { supabase } from '$lib/supabase';
     let suffixeSelectionne = $state(hero.id_suffixe);
 
     // URL publique ciblée : /ficheheros/[id_du_heros] avec le même ID à la fin
-    let urlPartage = $derived(`${window.location.origin}/ficheheros/${hero.id_heros}`);
+    let urlPartage = $derived(`${window.location.origin}${base}/ficheheros/${hero.id_heros}`);
 
 function ouvrirMenu() {
     sexeSelectionne = hero.sexe;
@@ -93,9 +94,9 @@ async function validerModifications() {
     }
 </script>
 
-<div class="page-detail" style="background-image: url('/heros/grange.png');">
+<div class="page-detail" style="background-image: url('{base}/heros/grange.png');">
     <div class="overlay">
-        <a href="/heros" class="btn-back">↩ Retour au Chenil</a>
+        <a href="{base}/heros" class="btn-back">↩ Retour au Chenil</a>
 
         {#if hero && hero.nom}
             {@const prog = calculerProgression(hero, niveaux)}
@@ -136,22 +137,22 @@ async function validerModifications() {
                 <div class="partage-reseaux-coins">
                     <!-- Facebook -->
                     <a href="https://www.facebook.com/sharer/sharer.php?u={encodeURIComponent(urlPartage)}" target="_blank" class="reseau-btn" title="Partager sur Facebook">
-                        <img src="/heros/facebook.png" alt="Facebook" />
+                        <img src="{base}/heros/facebook.png" alt="Facebook" />
                     </a>
 
                     <!-- Twitter / X -->
                     <a href="https://twitter.com/intent/tweet?url={encodeURIComponent(urlPartage)}&text=Viens%20d%C3%A9couvrir%20mon%20compagnon%20sur%20le%20jeu%20!" target="_blank" class="reseau-btn" title="Partager sur Twitter / X">
-                        <img src="/heros/twitter.png" alt="Twitter" />
+                        <img src="{base}/heros/twitter.png" alt="Twitter" />
                     </a>
 
                     <!-- Instagram -->
                     <button type="button" onclick={() => { navigator.clipboard.writeText(urlPartage); alert("Lien public copié ! Tu peux le coller sur Instagram."); }} class="reseau-btn" title="Copier le lien pour Instagram">
-                        <img src="/heros/instagram.png" alt="Instagram" />
+                        <img src="{base}/heros/instagram.png" alt="Instagram" />
                     </button>
 
                     <!-- TikTok -->
                     <button type="button" onclick={() => { navigator.clipboard.writeText(urlPartage); alert("Lien public copié ! Tu peux le partager sur TikTok."); }} class="reseau-btn" title="Copier le lien pour TikTok">
-                        <img src="/heros/tiktok.png" alt="TikTok" />
+                        <img src="{base}/heros/tiktok.png" alt="TikTok" />
                     </button>
                 </div>
 
@@ -343,7 +344,7 @@ async function validerModifications() {
         font-size: 1.2em; 
         letter-spacing: 1px;
     }
-    .btn-modifier { background-image: url('/cour/parchemin.png'); background-size: cover; background-position: center; border: 2px solid #4a3728; padding: 10px 20px; cursor: pointer; font-family: 'Cinzel', serif; color: #4a3728; font-weight: bold; border-radius: 5px; transition: transform 0.2s; }
+    .btn-modifier { background-size: cover; background-position: center; border: 2px solid #4a3728; padding: 10px 20px; cursor: pointer; font-family: 'Cinzel', serif; color: #4a3728; font-weight: bold; border-radius: 5px; transition: transform 0.2s; }
     .btn-modifier:hover { transform: scale(1.05); }
     .actions { margin-top: 10px; display: flex; justify-content: center; gap: 10px; }
     .modal-content h3 { font-family: 'Cinzel', serif; font-weight: bold; font-size: 1rem; color: #4a3728; margin-top: 0; margin-bottom: 25px; text-transform: uppercase; border-bottom: 1px solid #c5b399; padding-bottom: 10px; }
@@ -357,7 +358,7 @@ async function validerModifications() {
     .nom-preview-container {
         display: flex;
         align-items: center;
-        gap: 15px;              
+        gap: 15px;             
         margin-bottom: 25px;
         justify-content: center;
         flex-wrap: wrap;     

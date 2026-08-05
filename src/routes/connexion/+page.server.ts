@@ -1,4 +1,5 @@
 import { fail, redirect } from '@sveltejs/kit';
+import { base } from '$app/paths';
 import type { Actions } from '@sveltejs/kit';
 
 export const actions: Actions = {
@@ -20,7 +21,7 @@ export const actions: Actions = {
       return fail(400, { error: "Identifiants incorrects, Messire." });
     }
 
-    // Si tout est bon, direction la Cour !
-    throw redirect(303, '/cour');
+    // Si tout est bon, direction la Cour avec le préfixe dynamique !
+    throw redirect(303, `${base}/cour`);
   }
 };

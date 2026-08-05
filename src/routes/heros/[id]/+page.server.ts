@@ -1,4 +1,7 @@
 import { error, redirect } from '@sveltejs/kit';
+import { base } from '$app/paths';
+
+export const prerender = false;
 
 export const load = async ({ params, locals }: { params: any; locals: any }) => {
     const supabase = locals.supabase;
@@ -56,8 +59,8 @@ export const load = async ({ params, locals }: { params: any; locals: any }) => 
     // 5. Retourner les données
     return { 
         hero, 
-        disponiblePrefixes: prefixesAcquis?.map(a => a.pref).filter(Boolean) || [],
-        disponibleSuffixes: suffixesAcquis?.map(a => a.suffixes).filter(Boolean) || [],
+        disponiblePrefixes: prefixesAcquis?.map((a: any) => a.pref).filter(Boolean) || [],
+        disponibleSuffixes: suffixesAcquis?.map((a: any) => a.suffixes).filter(Boolean) || [],
         niveaux: niveaux || [],
         images: images || [],
         pref: pref || [],
@@ -84,6 +87,6 @@ export const actions = {
             throw error(500, updateError.message);
         }
         
-        throw redirect(303, '/heros');
+        throw redirect(303, `${base}/heros`);
     }
 };

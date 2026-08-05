@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { base } from '$app/paths';
     let { data, form } = $props();
 
     let showForm = $state(false);
@@ -49,7 +50,7 @@
     }
 </script>
 
-<div class="page-background" style="background-image: url('/heros/grange.png');">
+<div class="page-background" style="background-image: url('{base}/heros/grange.png');">
     <div class="overlay">
         {#if form?.message}
             <div class="banner {form.success ? 'success' : 'error'}">{form.message}</div>
@@ -57,11 +58,11 @@
 
         <header class="chenil-header">
             <!-- Bannière du haut -->
-            <img src="/heros/banniereheros.png" alt="Le Chenil des Héros" class="banner-title-img" />
+            <img src="{base}/heros/banniereheros.png" alt="Le Chenil des Héros" class="banner-title-img" />
             
             <!-- Bouton image compagnon avec espacement -->
             <button onclick={() => showForm = true} class="btn-inscription-img">
-                <img src="/heros/compagnon.png" alt="Inscrire un Compagnon" />
+                <img src="{base}/heros/compagnon.png" alt="Inscrire un Compagnon" />
             </button>
         </header>
 
@@ -69,15 +70,15 @@
             {#each data.heros as hero}
                 {@const prog = calculerProgression(hero, data.niveaux)}
                 
-                <a href="/heros/{hero.id_heros}" class="hero-card-link">
-                    <div class="hero-card" style="background-image: url('/heros/cadre_or.png');">
+                <a href="{base}/heros/{hero.id_heros}" class="hero-card-link">
+                    <div class="hero-card" style="background-image: url('{base}/heros/cadre_or.png');">
                         
                         <!-- Badge Niveau -->
                         <div class="level-badge">
-                            <img src="/chronique/{hero.niveau}.png" 
-                                 alt="Niveau {hero.niveau}" 
-                                 style="width: 100%; height: 100%; object-fit: contain;" 
-                                 onerror={handleError} />
+                            <img src="{base}/chronique/{hero.niveau}.png" 
+                                   alt="Niveau {hero.niveau}" 
+                                   style="width: 100%; height: 100%; object-fit: contain;" 
+                                   onerror={handleError} />
                         </div>
 
                         <!-- Portrait -->

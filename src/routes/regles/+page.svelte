@@ -1,10 +1,12 @@
 <script>
+    import { base } from '$app/paths';
+
     let actif = $state(null);
 
     const items = [
         { 
             id: 'mentions', 
-            img: '/mention/mention.png', 
+            img: `${base}/mention/mention.png`, 
             titre: 'Mentions Légales', 
             texte: `
                 <h3>1. Éditeur du Site</h3>
@@ -29,7 +31,7 @@
         },
         { 
             id: 'serment', 
-            img: '/mention/serment.png', 
+            img: `${base}/mention/serment.png`, 
             titre: 'Serment de Confidentialité', 
             texte: `
                 <h3>1. Préambule</h3>
@@ -59,7 +61,7 @@
         },
         { 
             id: 'cgv', 
-            img: '/mention/cgv.png', 
+            img: `${base}/mention/cgv.png`, 
             titre: 'Conditions Générales de Vente', 
             texte: `
                 <h3>1. Objet</h3>
@@ -75,7 +77,7 @@
         },
         { 
             id: 'cgu', 
-            img: '/mention/cgu.png', 
+            img: `${base}/mention/cgu.png`, 
             titre: 'Conditions Générales d\'Utilisation', 
             texte: `
                 <h3>1. Règles de conduite dans le Royaume</h3>
@@ -92,7 +94,7 @@
         },
         { 
             id: 'cookies', 
-            img: '/mention/cookie.png', 
+            img: `${base}/mention/cookie.png`, 
             titre: 'Politique des Cookies', 
             texte: `
                 <h3>1. Qu'est-ce qu'un cookie ?</h3>
@@ -121,14 +123,14 @@
     }
 </script>
 
-<div class="page-container">
+<div class="page-container" style="background-image: url('{base}/mention/fond.png');">
     
     <div class="image-titre">
-        <img src="/mention/titre.png" alt="Titre de la page" />
+        <img src="{base}/mention/titre.png" alt="Titre de la page" />
     </div>
 
     <div class="header">
-        <img src="/mention/parchemin.png" alt="Parchemin" />
+        <img src="{base}/mention/parchemin.png" alt="Parchemin" />
     </div>
 
     <div class="liste-parchemins">
@@ -155,7 +157,6 @@
         align-items: center;
         padding-top: 50px;
         min-height: 100vh;
-        background-image: url('/mention/fond.png');
         background-size: cover;
         background-position: center;
         background-attachment: fixed;

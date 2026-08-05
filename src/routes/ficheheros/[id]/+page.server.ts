@@ -1,5 +1,8 @@
 import { error, redirect } from '@sveltejs/kit';
+import { base } from '$app/paths';
 import type { PageServerLoad } from './$types';
+
+export const prerender = false;
 
 export const load: PageServerLoad = async ({ params, locals }) => {
     const supabase = locals.supabase;
@@ -81,6 +84,6 @@ export const actions = {
             throw error(500, updateError.message);
         }
         
-        throw redirect(303, '/heros');
+        throw redirect(303, `${base}/heros`);
     }
 };

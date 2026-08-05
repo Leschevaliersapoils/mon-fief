@@ -11,7 +11,7 @@
 </script>
 
 <div class="page-container">
-    <a href="/quete" class="btn-retour-externe">
+    <a href="{base}/quete" class="btn-retour-externe">
         <span class="fleche">↩</span> RETOUR AUX QUÊTES
     </a>
 

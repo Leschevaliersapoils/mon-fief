@@ -4,44 +4,56 @@
     import favicon from '$lib/assets/favicon.svg';
     import { goto, invalidateAll } from '$app/navigation';
     import { page } from '$app/stores';
+    import { base } from '$app/paths';
+    import { onMount } from 'svelte';
 
     let { data, children } = $props();
 
-    const routesSansHud = ['/', '/inscription', '/connexion'];
+    // Intercepte la redirection GitHub Pages (?p=...) au chargement de la page
+    onMount(() => {
+        const l = window.location;
+        const p = new URLSearchParams(l.search).get('p');
+        if (p) {
+            const target = base + p.replace(/~and~/g, '&');
+            window.history.replaceState(null, null, target);
+            goto(target, { replaceState: true });
+        }
+    });
 
-    // Pages qui doivent afficher le bouton "Retour à la cour"
-    const pagesAvecRetour = ['/heros', '/quete', '/chronique', '/pantheon', '/forge', '/regles', '/joueur'];
+    // On récupère le chemin actuel de manière propre
+    let currentPath = $derived($page.url.pathname);
 
+    
     const estSurRouteSansHud = $derived(
-        routesSansHud.includes($page.url.pathname) || 
-        $page.url.pathname.startsWith('/ficheheros')
+        currentPath === '/' || 
+        currentPath.endsWith('/') && currentPath.length === base.length + 1 ||
+        currentPath.includes('/connexion') || 
+        currentPath.includes('/inscription') ||
+        currentPath.includes('/ficheheros')
     );
 
+    // Le HUD ne s'affiche QUE si l'utilisateur est connecté ET qu'on n'est PAS sur une route sans HUD
+    const estVisible = $derived(!!data?.session && !estSurRouteSansHud);
+    
+    // Le bouton "Retour à la cour" s'affiche si le HUD est visible, MAIS PAS si on est déjà sur la page de la cour
     const afficherRetourCour = $derived(
-        pagesAvecRetour.includes($page.url.pathname)
+        estVisible && !currentPath.includes('/cour')
     );
 
     async function handleLogout() {
         console.log("Tentative de déconnexion forcée...");
-        
         try {
             await data.supabase.auth.signOut({ scope: 'global' });
-
             if (typeof window !== 'undefined') {
                 window.localStorage.clear(); 
             }
-
-            console.log("Session vidée, redirection...");
             await invalidateAll();
-            window.location.replace('/');
-            
+            window.location.replace(base + '/');
         } catch (err) {
             console.error("Erreur critique déconnexion:", err);
-            window.location.replace('/');
+            window.location.replace(base + '/');
         }
     }
-
-    const estVisible = $derived(data?.session && !estSurRouteSansHud);
     
     let hasMessages = $derived((data?.nbMessagesNonLus || 0) > 0);
     let countMessages = $derived(data?.nbMessagesNonLus || 0);
@@ -57,7 +69,7 @@
             <!-- Bouton Retour à la cour -->
             <div class="hud-left">
                 {#if afficherRetourCour}
-                    <a href="/cour" class="btn-retour-cour" title="Retour à la cour">
+                    <a href="{base}/cour" class="btn-retour-cour" title="Retour à la cour">
                         ↩ RETOUR À LA COUR
                     </a>
                 {/if}
@@ -66,14 +78,14 @@
             <!-- Icônes du HUD à droite -->
             <div class="hud-pure">
                 <!-- Bouton Règles -->
-                <a href="/regles" class="hud-item" title="Règles">
-                    <img src="/icons/mention.png" alt="Règles" class="logo-img icon-mention" />
+                <a href="{base}/regles" class="hud-item" title="Règles">
+                    <img src="{base}/icons/mention.png" alt="Règles" class="logo-img icon-mention" />
                 </a>
 
                 <!-- Bouton Messagerie et Compte avec Notification -->
-                <a href="/joueur" class="hud-item {hasMessages ? 'has-notification' : ''}" title="Messagerie et Compte">
+                <a href="{base}/joueur" class="hud-item {hasMessages ? 'has-notification' : ''}" title="Messagerie et Compte">
                     <div class="icon-wrapper">
-                        <img src="/icons/user-crown.png" alt="Messagerie et Compte" class="logo-img {hasMessages ? 'icon-bounce' : ''}" />
+                        <img src="{base}/icons/user-crown.png" alt="Messagerie et Compte" class="logo-img {hasMessages ? 'icon-bounce' : ''}" />
                         {#if hasMessages}
                             <span class="badge-notification">{countMessages}</span>
                         {/if}
@@ -82,13 +94,13 @@
 
                 <!-- Bouton Déconnexion -->
                 <button class="hud-item btn-deconnexion" onclick={handleLogout} title="Déconnexion">
-                    <img src="/icons/logout-door.png" alt="Déconnexion" class="logo-img" />
+                    <img src="{base}/icons/logout-door.png" alt="Déconnexion" class="logo-img" />
                 </button>
             </div>
         </div>
     {/if}
 
-    <div class="content-wrapper">
+    <div class="content-wrapper" data-sveltekit-preload-data="off">
         {@render children()}
     </div>
 </div>
@@ -100,7 +112,6 @@
         position: relative;
     }
 
-    /* Par défaut (petits écrans / fenêtres réduites) : Le bandeau a son propre espace avec fond opaque pour ne pas masquer le contenu */
     .hud-layer {
         position: relative;
         z-index: 99999;
@@ -223,7 +234,7 @@
         filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.6)) brightness(1.2);
     }
     
-    a[href="/regles"]:hover {
+    a[href="{base}/regles"]:hover {
         transform: scale(1.15); 
     }
 
@@ -232,7 +243,6 @@
         min-height: 42px;
     }
 
-    /* Grands écrans (> 850px) : Le bandeau devient transparent et se superpose par-dessus le contenu */
     @media (min-width: 851px) {
         .hud-layer {
             position: absolute;

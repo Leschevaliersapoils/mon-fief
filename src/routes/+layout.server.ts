@@ -1,16 +1,17 @@
 import { redirect } from '@sveltejs/kit';
+import { base } from '$app/paths';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ locals, url }) => {
-    // 1. Utiliser uniquement safeGetSession qui est la méthode recommandée pour SvelteKit
+   
     const { session, user } = await locals.safeGetSession();
 
-    const pagesPubliques = ['/', '/inscription', '/connexion'];
+    const pagesPubliques = [`${base}/`, `${base}/inscription`, `${base}/connexion`];
     const estSurPagePublique = pagesPubliques.includes(url.pathname);
 
     // 2. Sécurité basée sur l'objet 'user' (vérifié côté serveur)
     if (!user && !estSurPagePublique) {
-        throw redirect(303, '/');
+        throw redirect(303, `${base}/`);
     }
 
     // 3. Récupération des données du joueur et du nombre de messages non lus

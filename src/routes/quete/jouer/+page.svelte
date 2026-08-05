@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { base } from '$app/paths';
     import { enhance } from '$app/forms'; 
     import type { PageData, ActionData } from './$types';
     
@@ -12,12 +13,12 @@
     }
 </script>
 
-<div class="page-container">
-    <a href="/quete" class="btn-retour-externe">
+<div class="page-container" style="background: radial-gradient(circle, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.8) 100%), url('{base}/quete/taverne.png'); background-size: cover;">
+    <a href="{base}/quete" class="btn-retour-externe">
         <span class="fleche">↩</span> RETOUR AUX QUÊTES
     </a>
 
-    <div class="parchemin-fond">
+    <div class="parchemin-fond" style="background: url('{base}/quete/parcho.png') no-repeat center; background-size: 100% 100%;">
         <div class="contenu-parchemin">
             
             <div class="header-compagnon">
@@ -90,7 +91,6 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        background: radial-gradient(circle, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.8) 100%), url('/quete/taverne.png');
         background-size: cover;
     }
 
@@ -105,7 +105,6 @@
     }
 
     .parchemin-fond {
-        background: url('/quete/parcho.png') no-repeat center;
         background-size: 100% 100%;
         width: 100%;
         max-width: 1300px;

@@ -25,9 +25,9 @@
   </div>
 
   <div class="cta-section">
-    <a href="/inscription" class="btn-start">Commencer ma première quête</a>
+    <a href="{base}/inscription" class="btn-start">Commencer ma première quête</a>
     <br>
-    <a href="/" class="back-link">Retour au château</a>
+    <a href="{base}/" class="back-link">Retour au château</a>
   </div>
 </div>
 

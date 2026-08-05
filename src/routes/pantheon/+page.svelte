@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { base } from '$app/paths';
+
   let { data } = $props();
 
   let tousLesHeros = $derived(Array.isArray(data?.topHeros) ? data.topHeros : []);
@@ -21,8 +23,8 @@
       return {
         ...heros,
         rang: rangReel,
-        stele: `/pantheon/stele${rangReel}.png`,
-        titreImg: `/pantheon/titre${rangReel}.png`,
+        stele: `${base}/pantheon/stele${rangReel}.png`,
+        titreImg: `${base}/pantheon/titre${rangReel}.png`,
         prefixe,
         suffixe,
         nomUpper: heros?.nom ? heros.nom.toUpperCase() : ''
@@ -100,11 +102,11 @@
   );
 </script>
 
-<div class="page-quete" style="background-image: url('/pantheon/fond.png');">
+<div class="page-quete" style="background-image: url('{base}/pantheon/fond.png');">
 
     <div class="container">
         <header class="main-header">
-            <img src="/pantheon/banniere.png" alt="Mur des Légendes" class="banner-img" />
+            <img src="{base}/pantheon/banniere.png" alt="Mur des Légendes" class="banner-img" />
         </header>
 
         {#if topTrois.length > 0}

@@ -1,4 +1,5 @@
 <script>
+  import { base } from '$app/paths';
   import { supabase } from '$lib/supabase';
 
   let { data } = $props();
@@ -78,18 +79,18 @@
   });
 </script>
 
-<div class="page-background">
+<div class="page-background" style="min-height: 100vh; background-image: url('{base}/chronique/fondparchemin.png'); background-size: cover; background-position: center; background-attachment: fixed; padding: 40px 20px; box-sizing: border-box;">
   <!-- Titre en pleine largeur -->
-  <header class="wide-header">
-    <div class="title-container">
-      <img src="/chronique/banniere.png" alt="Les Chroniques du Royaume" class="main-banniere" />
+  <header class="wide-header" style="width: 100%; margin-bottom: 25px; display: flex; justify-content: center;">
+    <div class="title-container" style="width: 100%; max-width: 1400px; display: flex; justify-content: center; align-items: center; padding: 0 10px; box-sizing: border-box;">
+      <img src="{base}/chronique/banniere.png" alt="Les Chroniques du Royaume" class="main-banniere" style="width: 100%; max-width: 1000px; height: auto; object-fit: contain; display: block; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));" />
     </div>
   </header>
 
-  <main class="main-container">
+  <main class="main-container" style="max-width: 1300px; margin: 0 auto;">
     
     <!-- VERSION DESKTOP : Onglets classiques côte à côte -->
-    <div class="desktop-tabs">
+    <div class="desktop-tabs" style="display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; width: 100%;">
       {#each tabsList as tab}
         <button class:active={activeTab === tab.id} onclick={() => switchTab(tab.id)}>
           {tab.label}
@@ -108,13 +109,13 @@
       <button class="slider-arrow" onclick={tabSuivant} aria-label="Suivant">❯</button>
     </div>
 
-    <div class="content">
+    <div class="content" style="background: rgba(255, 250, 240, 0.55); padding: 30px; border-radius: 12px; border: 2px solid #d2b48c; box-shadow: 0 8px 16px rgba(0,0,0,0.1);">
       {#if activeTab === 'royaume'}
-        <img src="/chronique/royaume.png" alt="Bannière Royaume" class="section-banner" />
+        <img src="{base}/chronique/royaume.png" alt="Bannière Royaume" class="section-banner" />
       {:else if activeTab === 'compagnon'}
-        <img src="/chronique/compagnon.png" alt="Bannière Compagnons" class="section-banner" />
+        <img src="{base}/chronique/compagnon.png" alt="Bannière Compagnons" class="section-banner" />
       {:else}
-        <img src="/chronique/amis.png" alt="Bannière Amis" class="section-banner" />
+        <img src="{base}/chronique/amis.png" alt="Bannière Amis" class="section-banner" />
       {/if}
 
       {#if loading}
@@ -157,81 +158,20 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=Crimson+Text:wght@400;600&display=swap');
 
-.page-background { min-height: 100vh; background-image: url('/chronique/fondparchemin.png'); background-size: cover; background-position: center; background-attachment: fixed; padding: 40px 20px; box-sizing: border-box; }
-
-.wide-header { width: 100%; margin-bottom: 25px; display: flex; justify-content: center; }
-.title-container { width: 100%; max-width: 1400px; display: flex; justify-content: center; align-items: center; padding: 0 10px; box-sizing: border-box; }
-
-.main-banniere { 
-  width: 100%; 
-  max-width: 1000px; 
-  height: auto; 
-  object-fit: contain; 
-  display: block; 
-  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4)); 
-}
-
-.main-container { max-width: 1300px; margin: 0 auto; }
 .section-banner { display: block; width: 100%; max-height: 70px; object-fit: contain; margin-bottom: 25px; }
 
 /* Desktop Tabs */
-.desktop-tabs {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-bottom: 30px;
-  width: 100%;
-}
+.desktop-tabs button { background: linear-gradient(to bottom, #e1c699, #c8a268); border: 2px solid #8b4513; border-radius: 8px; padding: 12px 30px; font-family: 'Crimson Text', serif; color: #5a3728; font-weight: bold; font-size: 1.1rem; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.15); transition: all 0.2s; }
+.desktop-tabs button:hover { background: linear-gradient(to bottom, #d2b48c, #b8860b); transform: translateY(-2px); }
+.desktop-tabs button.active { background: linear-gradient(to bottom, #8b4513, #5a3728); color: #fff; border-color: #ffd700; box-shadow: inset 0 2px 4px rgba(0,0,0,0.3); }
 
-.desktop-tabs button {
-  background: linear-gradient(to bottom, #e1c699, #c8a268);
-  border: 2px solid #8b4513;
-  border-radius: 8px;
-  padding: 12px 30px;
-  font-family: 'Crimson Text', serif;
-  color: #5a3728;
-  font-weight: bold;
-  font-size: 1.1rem;
-  cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.15);
-  transition: all 0.2s;
-}
+.mobile-filter-slider { display: none; }
 
-.desktop-tabs button:hover {
-  background: linear-gradient(to bottom, #d2b48c, #b8860b);
-  transform: translateY(-2px);
-}
-
-.desktop-tabs button.active {
-  background: linear-gradient(to bottom, #8b4513, #5a3728);
-  color: #fff;
-  border-color: #ffd700;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
-}
-
-.mobile-filter-slider {
-  display: none;
-}
-
-.content { background: rgba(255, 250, 240, 0.55); padding: 30px; border-radius: 12px; border: 2px solid #d2b48c; box-shadow: 0 8px 16px rgba(0,0,0,0.1); }
 .loading-text { text-align: center; font-family: 'Crimson Text', serif; font-size: 1.2rem; color: #5a3728; padding: 20px; }
 
-.events-list {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
+.events-list { display: flex; flex-direction: column; gap: 15px; }
 
-.event-card { 
-  display: flex; 
-  align-items: center; 
-  padding: 18px 20px; 
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid #d2b48c; 
-  border-radius: 8px;
-  gap: 20px; 
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
+.event-card { display: flex; align-items: center; padding: 18px 20px; background: rgba(255, 255, 255, 0.7); border: 1px solid #d2b48c; border-radius: 8px; gap: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
 
 .main-logo { width: 65px; height: 65px; object-fit: contain; flex-shrink: 0; }
 .main-logo-mobile { display: none; }
@@ -258,123 +198,40 @@
   .page-background { padding: 10px 4px; }
   .content { padding: 10px 8px; }
 
-  .main-banniere {
-    max-width: 100%;
-  }
+  .main-banniere { max-width: 100%; }
+  .section-banner { max-height: 35px; margin-bottom: 12px; }
 
-  .section-banner {
-    max-height: 35px;
-    margin-bottom: 12px;
-  }
+  .desktop-tabs { display: none; }
 
-  .desktop-tabs {
-    display: none;
-  }
+  .mobile-filter-slider { display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 15px; width: 100%; }
 
-  .mobile-filter-slider {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    margin-bottom: 15px;
-    width: 100%;
-  }
+  .current-filter-display { background: linear-gradient(to bottom, #8b4513, #5a3728); border: 1.5px solid #ffd700; border-radius: 6px; padding: 6px 10px; text-align: center; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.3); flex-grow: 1; }
 
-  .current-filter-display {
-    background: linear-gradient(to bottom, #8b4513, #5a3728);
-    border: 1.5px solid #ffd700;
-    border-radius: 6px;
-    padding: 6px 10px;
-    text-align: center;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    flex-grow: 1;
-  }
+  .filter-text { font-size: 0.9rem; }
 
-  .filter-text {
-    font-size: 0.9rem;
-  }
-
-  .slider-arrow {
-    width: 32px;
-    height: 32px;
-    font-size: 1rem;
-    border-width: 1.5px;
-    border-radius: 6px;
-  }
+  .slider-arrow { width: 32px; height: 32px; font-size: 1rem; border-width: 1.5px; border-radius: 6px; }
   
-  .events-list {
-    gap: 10px;
-  }
+  .events-list { gap: 10px; }
 
-  /* Cache le grand logo à gauche sur mobile pour libérer de la hauteur */
-  .event-left {
-    display: none;
-  }
+  .event-left { display: none; }
 
-  .event-card {
-    flex-direction: column;
-    align-items: stretch;
-    padding: 10px 12px;
-    gap: 6px;
-  }
+  .event-card { flex-direction: column; align-items: stretch; padding: 10px 12px; gap: 6px; }
 
-  /* Alignement du logo et du titre sur une seule ligne */
-  .title-header-mobile {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 2px;
-  }
+  .title-header-mobile { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 2px; }
 
-  .main-logo-mobile {
-    display: inline-block;
-    width: 34px;
-    height: 34px;
-    object-fit: contain;
-    flex-shrink: 0;
-  }
+  .main-logo-mobile { display: inline-block; width: 34px; height: 34px; object-fit: contain; flex-shrink: 0; }
 
-  .event-title { 
-    font-size: 0.9rem; 
-    text-align: left;
-  }
+  .event-title { font-size: 0.9rem; text-align: left; }
   
-  .event-text { 
-    font-size: 0.88rem; 
-    text-align: center;
-    margin-top: 2px;
-  }
+  .event-text { font-size: 0.88rem; text-align: center; margin-top: 2px; }
 
-  .middle-content {
-    width: 100%;
-    min-width: 0;
-  }
+  .middle-content { width: 100%; min-width: 0; }
 
-  /* Pied de carte compact (Date + Heure + Sceau) */
-  .right-content {
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    gap: 12px;
-    border-top: 1px dashed rgba(139, 69, 19, 0.2);
-    padding-top: 6px;
-    margin-top: 4px;
-  }
+  .right-content { flex-direction: row; justify-content: center; align-items: center; width: 100%; gap: 12px; border-top: 1px dashed rgba(139, 69, 19, 0.2); padding-top: 6px; margin-top: 4px; }
 
-  .small-logo-right { 
-    width: 28px; 
-    height: 28px; 
-  }
+  .small-logo-right { width: 28px; height: 28px; }
 
-  .datetime {
-    flex-direction: row;
-    gap: 6px;
-    align-items: center;
-    min-width: 0;
-  }
+  .datetime { flex-direction: row; gap: 6px; align-items: center; min-width: 0; }
   
   .event-date { font-size: 0.75rem; }
   .event-time { font-size: 0.75rem; }

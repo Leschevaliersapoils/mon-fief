@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { base } from '$app/paths';
     import type { PageData } from './$types';
 
     type Hero = { id_heros: string, id_race: string, nom: string, niveau: number, images_profil?: { url_image?: string } };
@@ -10,7 +11,7 @@
 
     function getIconPath(type: string) {
         const name = type.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-        return `/quete/defis/${name}.png`;
+        return `${base}/quete/defis/${name}.png`;
     }
 
     function getNbEnAttente(herosId: string) {
@@ -82,9 +83,9 @@
     });
 </script>
 
-<div class="page-quete">
+<div class="page-quete" style="background-image: url('{base}/quete/taverne.png');">
     <div class="container">
-        <header class="main-header">
+        <header class="main-header" style="background-image: url('{base}/quete/panneau_titre.png');">
             <h1>TABLEAU DES QUÊTES</h1>
             <div class="message-chambellan">
                 <p>Le Chambellan valide les épreuves le Mardi et Vendredi soir.<br />2 quêtes max par compagnon.</p>
@@ -137,7 +138,7 @@
 
         <div class="board">
             {#each defisFinals() as defi}
-                <div class="parchemin-wrapper">
+                <div class="parchemin-wrapper" style="background-image: url('{base}/quete/parchemin.png');">
                     <img src={getIconPath(defi.Type)} alt={defi.Type} class="quest-type-medal" />
                     
                     <div class="parchemin-content">
@@ -153,9 +154,9 @@
                             </div>
 
                             {#if nbEnAttente >= 2}
-                                <button class="btn-jouer" disabled>LIMITE ATTEINTE</button>
+                                <button class="btn-jouer" disabled style="background-image: url('{base}/quete/panneau_jouer.png');">LIMITE ATTEINTE</button>
                             {:else}
-                                <a href="/quete/jouer?defi={defi.id}&heros={herosSelectionneId}" class="btn-jouer">
+                                <a href="{base}/quete/jouer?defi={defi.id}&heros={herosSelectionneId}" class="btn-jouer" style="background-image: url('{base}/quete/panneau_jouer.png');">
                                     ACCOMPLIR
                                 </a>
                             {/if}
@@ -170,10 +171,10 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=MedievalSharp&display=swap');
 
-    .page-quete { min-height: 100vh; background-image: url('/quete/taverne.png'); background-size: cover; background-position: center; background-attachment: fixed; padding: 40px 20px; position: relative; }
+    .page-quete { min-height: 100vh; background-size: cover; background-position: center; background-attachment: fixed; padding: 40px 20px; position: relative; }
     .container { max-width: 1400px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
     
-    .main-header { padding-top: 10px; width: 100%; max-width: 650px; height: 140px; background-image: url('/quete/panneau_titre.png'); background-size: contain; background-repeat: no-repeat; background-position: center; display: flex; flex-direction: column; justify-content: center; align-items: center; margin-bottom: 20px; box-sizing: border-box; }
+    .main-header { padding-top: 10px; width: 100%; max-width: 650px; height: 140px; background-size: contain; background-repeat: no-repeat; background-position: center; display: flex; flex-direction: column; justify-content: center; align-items: center; margin-bottom: 20px; box-sizing: border-box; }
     .main-header h1 { font-family: 'Cinzel', serif; color: #f4e4bc; font-size: 2rem; text-shadow: 2px 2px 4px #000; margin-top: 0px; margin-bottom: -10px; text-align: center; }
     
     .hero-selector-container { margin-bottom: 25px; width: 100%; max-width: 1000px; display: flex; justify-content: center; }
@@ -211,19 +212,18 @@
     .mobile-hero-slider { display: none; }
 
     .board { 
-        display: flex;             
-        flex-wrap: wrap;           
+        display: flex;            
+        flex-wrap: wrap;          
         justify-content: center;   
-        gap: 20px;                 
+        gap: 20px;                
         width: 100%; 
-        max-width: 1200px;         
-        margin: 0 auto;            
+        max-width: 1200px;        
+        margin: 0 auto;           
     }
     .parchemin-wrapper {
         position: relative;
         width: 320px;
         height: 480px;
-        background-image: url('/quete/parchemin.png');
         background-size: 100% 100%; 
         background-repeat: no-repeat;
         display: flex;
@@ -258,11 +258,11 @@
     }
     .quest-type-medal {
         position: absolute;       
-        top: 35px;                  
-        right: 30px;                
-        width: 65px;                
-        height: 65px;               
-        z-index: 10;                
+        top: 35px;                    
+        right: 30px;                    
+        width: 65px;                    
+        height: 65px;                   
+        z-index: 10;                    
         object-fit: contain;
         filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5));
     }
@@ -281,7 +281,7 @@
     }
 
     .xp-badge { font-weight: bold; color: #2e5a1c; font-size: 1.1rem; }
-    .btn-jouer { width: 170px; height: 45px; background-image: url('/quete/panneau_jouer.png'); background-size: 100% 100%; border: none; cursor: pointer; font-family: 'Cinzel', serif; color: #f4e4bc; font-weight: bold; display: flex; justify-content: center; align-items: center; text-decoration: none; }
+    .btn-jouer { width: 170px; height: 45px; background-size: 100% 100%; border: none; cursor: pointer; font-family: 'Cinzel', serif; color: #f4e4bc; font-weight: bold; display: flex; justify-content: center; align-items: center; text-decoration: none; }
     .message-chambellan { margin-top: 5px; padding-top: 5px; border-top: 1px solid rgba(255, 255, 255, 0.2); width: 80%; }
     .message-chambellan p { font-size: 0.85rem; color: #e0d0b0; font-style: italic; text-align: center; margin: 0; }
     

@@ -1,8 +1,9 @@
 <script lang="ts">
+import { base } from '$app/paths';
 import { supabase } from '$lib/supabase';
     let { data } = $props();
 
-    let hero = $state({ 
+    let hero = $state({
         ...data.hero,
         id_prefixe: data.hero?.id_prefixe ?? null,
         id_suffixe: data.hero?.id_suffixe ?? null
@@ -11,16 +12,16 @@ import { supabase } from '$lib/supabase';
     let sexeSelectionne = $state(hero.sexe);
     let imageSelectionneeId = $state(hero.id_image);
     let imagesDisponibles = $derived(
-    Array.isArray(data.images) 
+    Array.isArray(data.images)
         ? data.images.filter((img: any) => {
             const estAvatarDeBase = String(img.id_race) === String(hero.race?.id_race) && !img.id_heros;
             const estMonAvatarPerso = Number(img.id_heros) === Number(hero.id_heros);
 
             return estAvatarDeBase || estMonAvatarPerso;
-        }) 
+        })
         : []
 );
-    
+   
     let prefixesDisponibles = $derived(data.disponiblePrefixes || []);
 
 function ouvrirMenu() {
@@ -35,7 +36,7 @@ function fermerMenu() {
 async function validerModifications() {
     const { error } = await supabase
         .from('heros')
-        .update({ 
+        .update({
             sexe: sexeSelectionne,
             id_image: imageSelectionneeId,
             id_prefixe: hero.id_prefixe,
@@ -56,7 +57,7 @@ async function validerModifications() {
         {#if hero && hero.nom}
             <div class="fiche-parchemin">
                 <!-- Logo / Blason dans le coin supérieur droit -->
-                <img src="/Logo2.png" alt="Blason" class="blason-coin" />
+                <img src="{base}/Logo2.png" alt="Blason" class="blason-coin" />
 
                 <div class="titre-ordre-container">
                     <svg viewBox="0 0 500 140" class="texte-arc">
@@ -85,14 +86,14 @@ async function validerModifications() {
                             {hero.sexe === 'Femelle' ? (hero.suffixes?.texte_feminin || '') : (hero.suffixes?.texte_masculin || '')}
                         </span>
                     </h1>
-                    
+                   
                     <!-- Badge de niveau avec infobulle couleur parchemin -->
                     <div class="niveau-badge-container">
                         <div class="tooltip-container">
-                            <img 
-                                src={`/chronique/${hero.niveau || 1}.png`} 
-                                alt="Badge de niveau" 
-                                class="img-niveau" 
+                            <img
+                                src="{base}/chronique/{hero.niveau || 1}.png"
+                                alt="Badge de niveau"
+                                class="img-niveau"
                             />
                             <span class="tooltip-text">Niveau {hero.niveau || 1}</span>
                         </div>
@@ -107,11 +108,11 @@ async function validerModifications() {
                     <div class="modal-overlay">
                         <div class="modal-content">
                             <h3>Modifier les informations</h3>
-                    
+                   
                             <label>Nom et Titres :</label>
 
                             <div class="nom-preview-container">
-                                <select bind:value={hero.id_prefixe}> 
+                                <select bind:value={hero.id_prefixe}>
                                     <option value={null}>Aucun préfixe</option>
                                     {#each prefixesDisponibles as prefItem}
                                         <option value={prefItem.id_pre}>
@@ -119,7 +120,7 @@ async function validerModifications() {
                                         </option>
                                     {/each}
                                 </select>
-                                
+                               
                                 <span class="nom-hero">{hero.nom}</span>
 
                                 <select bind:value={hero.id_suffixe}>
@@ -136,11 +137,11 @@ async function validerModifications() {
                             <div class="avatar-grid">
                                 {#each imagesDisponibles as img (img.id_image)}
                                     <label class="avatar-option">
-                                        <input 
-                                            type="radio" 
-                                            name="id_image" 
-                                            value={img.id_image} 
-                                            bind:group={imageSelectionneeId} 
+                                        <input
+                                            type="radio"
+                                            name="id_image"
+                                            value={img.id_image}
+                                            bind:group={imageSelectionneeId}
                                         />
                                         <div class="avatar-wrapper" class:selected={imageSelectionneeId === img.id_image}>
                                             <img src={img.url_image} alt="Portrait" />
@@ -164,46 +165,46 @@ async function validerModifications() {
                 <p style="color: #4a3728; font-family: 'Cinzel', serif;">Chargement des données...</p>
             </div>
         {/if}
-    
+   
         <div class="cta-rejoindre-container">
             <p class="cta-texte">Toi aussi, rejoins l'Ordre et monte le niveau de tes héros !</p>
-            <a href="/inscription" class="btn-rejoindre">Rejoindre l'Ordre</a>
+            <a href="{base}/inscription" class="btn-rejoindre">Rejoindre l'Ordre</a>
         </div>
     </div>
 </div>
 
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap'); 
-    
-    .page-detail { 
+    @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap');
+   
+    .page-detail {
         position: relative;
-        min-height: 100vh; 
+        min-height: 100vh;
         background-image: url('/Fondaccueil.jpg');
-        background-size: cover; 
-        background-position: center; 
+        background-size: cover;
+        background-position: center;
     }
 
-    .overlay { 
+    .overlay {
         position: relative;
-        min-height: 100vh; 
-        background: rgba(0, 0, 0, 0.4); 
-        padding: 40px 20px; 
-        display: flex; 
-        flex-direction: column; 
-        align-items: center; 
-        justify-content: center; 
+        min-height: 100vh;
+        background: rgba(0, 0, 0, 0.4);
+        padding: 40px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
 
-    .fiche-parchemin { 
+    .fiche-parchemin {
         width: 100%;
-        max-width: 550px; 
+        max-width: 550px;
         min-height: 750px;
         background: url('/ficheheros/cadre.png') no-repeat center center;
         background-size: 100% 100%;
-        padding: 40px 30px; 
-        text-align: center; 
-        position: relative; 
+        padding: 40px 30px;
+        text-align: center;
+        position: relative;
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
@@ -216,7 +217,7 @@ async function validerModifications() {
         position: absolute;
         top: 30px;
         right: 35px;
-        width: 70px; 
+        width: 70px;
         height: auto;
         object-fit: contain;
         z-index: 20;
@@ -236,31 +237,31 @@ async function validerModifications() {
     .texte-arc {
         width: 450px;
         height: 150px;
-        fill: #4a3728; 
+        fill: #4a3728;
         font-family: 'IM Fell English SC', serif;
-        font-size: 1.45rem; 
+        font-size: 1.45rem;
         letter-spacing: 2px;
         font-weight: bold;
         overflow: visible;
     }
 
-    .portrait-container { 
+    .portrait-container {
         width: 100%;
         max-width: 260px;
         aspect-ratio: 1;
-        display: flex; 
-        justify-content: center; 
-        align-items: center; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
         margin-bottom: 20px;
-        z-index: 10; 
+        z-index: 10;
         position: relative;
     }
 
-    .hero-img-float { 
-        width: 100%; 
-        height: 100%; 
-        object-fit: contain; 
-        filter: drop-shadow(0 8px 8px rgba(0,0,0,0.4)); 
+    .hero-img-float {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        filter: drop-shadow(0 8px 8px rgba(0,0,0,0.4));
         z-index: 1;
     }
 
@@ -269,15 +270,15 @@ async function validerModifications() {
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-top: 5px; 
+        margin-top: 5px;
     }
 
     .hero-title-block {
         display: flex;
-        flex-wrap: nowrap; 
+        flex-wrap: nowrap;
         justify-content: center;
         align-items: baseline;
-        gap: 0.3rem; 
+        gap: 0.3rem;
         font-family: 'Cinzel', serif;
         color: #4a3728;
         margin: 10px 0;
@@ -291,21 +292,21 @@ async function validerModifications() {
         font-weight: bold;
         text-transform: uppercase;
         opacity: 0.8;
-        flex-shrink: 0; 
+        flex-shrink: 0;
     }
 
     .nom-principal {
-        font-size: 1.3em; 
+        font-size: 1.3em;
         letter-spacing: 1px;
         font-weight: bold;
     }
 
-    .race-type { 
-        color: #5d4635; 
-        font-style: italic; 
+    .race-type {
+        color: #5d4635;
+        font-style: italic;
         margin-top: 5px;
-        font-weight: bold; 
-        font-size: 1.1rem; 
+        font-weight: bold;
+        font-size: 1.1rem;
     }
 
     /* Style pour l'image du niveau et son infobulle */
@@ -355,15 +356,15 @@ async function validerModifications() {
     }
 
     .footer-aventure {
-        margin-top: auto; 
+        margin-top: auto;
         width: 100%;
         padding: 25px 20px;
-        border-top: 1px solid #c5b399; 
+        border-top: 1px solid #c5b399;
         color: #6e553d;
-        font-family: 'IM Fell English SC', serif; 
+        font-family: 'IM Fell English SC', serif;
         font-style: italic;
         font-size: 1.1rem;
-        background: rgba(233, 217, 187, 0.3); 
+        background: rgba(233, 217, 187, 0.3);
     }
 
     .modal-overlay {
@@ -387,11 +388,11 @@ async function validerModifications() {
         box-shadow: 0 10px 30px rgba(0,0,0,0.7) !important;
         width: 90% !important;        
         max-width: 700px !important;  
-        min-height: 400px !important; 
+        min-height: 400px !important;
     }
 
     .btn-modifier {
-        background-image: url('/cour/parchemin.png');
+        background-image: url('{base}/cour/parchemin.png');
         background-size: cover;
         background-position: center;
         border: 2px solid #4a3728;
@@ -447,36 +448,36 @@ async function validerModifications() {
         cursor: pointer;
     }
 
-    .avatar-grid { 
-        display: grid; 
-        grid-template-columns: repeat(3, 1fr); 
-        gap: 10px; 
+    .avatar-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
         margin-bottom: 20px;
     }
 
-    .avatar-option input { 
-        display: none; 
+    .avatar-option input {
+        display: none;
     }
 
-    .avatar-wrapper { 
-        aspect-ratio: 1; 
-        border: 3px solid transparent; 
-        border-radius: 8px; 
+    .avatar-wrapper {
+        aspect-ratio: 1;
+        border: 3px solid transparent;
+        border-radius: 8px;
         cursor: pointer;
-        display: flex; 
-        align-items: center; 
+        display: flex;
+        align-items: center;
         justify-content: center;
         background: #f4e4bc;
     }
 
-    .avatar-wrapper.selected { 
-        border-color: #d4af37; 
-        background: #c5b399; 
+    .avatar-wrapper.selected {
+        border-color: #d4af37;
+        background: #c5b399;
     }
 
-    .avatar-wrapper img { 
-        width: 90%; 
-        object-fit: contain; 
+    .avatar-wrapper img {
+        width: 90%;
+        object-fit: contain;
     }
 
     .nom-preview-container {
@@ -505,7 +506,7 @@ async function validerModifications() {
         margin-top: 25px;
         text-align: center;
         display: flex;
-        flex-direction: column;
+       flex-direction: column;
         align-items: center;
         gap: 10px;
     }

@@ -1,4 +1,5 @@
-<script>
+<script lang="ts">
+    import { base } from '$app/paths';
     let { data } = $props();
     
     // Récupération des données depuis le layout
@@ -15,7 +16,7 @@
         <div class="info-section">
             <div class="avatar-box">
                 <!-- On réutilise ton icône de couronne -->
-                <img src="/icons/user-crown.png" alt="Avatar" class="avatar-img" />
+                <img src="{base}/icons/user-crown.png" alt="Avatar" class="avatar-img" />
             </div>
             
             <div class="details">
@@ -30,7 +31,7 @@
         <div class="divider"></div>
 
         <div class="actions">
-            <a href="/cour" class="btn-retour">Retour à la Cour</a>
+            <a href="{base}/cour" class="btn-retour">Retour à la Cour</a>
         </div>
     </div>
 </div>

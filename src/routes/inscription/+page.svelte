@@ -1,11 +1,12 @@
 <script lang="ts">
+  import { base } from '$app/paths';
   import { enhance } from '$app/forms';
   
   // Voici la nouvelle syntaxe Svelte 5
   let { form } = $props(); 
 </script>
 
-<div class="form-container">
+<div class="form-container" style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('{base}/Fondaccueil.jpg');">
   <!-- 
     method="POST" : dit au formulaire d'envoyer les données au serveur.
     use:enhance : permet d'envoyer les données sans faire clignoter la page (SvelteKit gère ça en arrière-plan).
@@ -40,7 +41,7 @@
     <button type="submit" class="btn-submit">Rejoindre la Table Ronde ⚔️</button>
     
     <div class="footer-links">
-      <a href="/" class="back-link">Retour au château</a>
+      <a href="{base}/" class="back-link">Retour au château</a>
     </div>
   </form>
 </div>
@@ -51,7 +52,6 @@
   .form-container {
     min-height: 100vh;
     width: 100vw;
-    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/Fondaccueil.jpg');
     background-size: cover;
     background-position: center;
     display: flex;
