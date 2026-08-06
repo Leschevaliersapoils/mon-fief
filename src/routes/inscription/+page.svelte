@@ -6,7 +6,7 @@
 </script>
 
 <div class="form-container" style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('{base}/Fondaccueil.jpg');">
-  <form method="POST" action="?" use:enhance>
+  <form method="POST" action="{base}/inscription" use:enhance>
     <h1>Devenir Chevalier</h1>
     <p>Créez votre compte de joueur pour commencer l'aventure.</p>
 
