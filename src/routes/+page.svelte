@@ -1,7 +1,6 @@
 <script>
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation';
-    import { base } from '$app/paths';
 
     onMount(() => {
         const repo = window.location.search;
@@ -10,34 +9,32 @@
             goto(redirect, { replaceState: true });
         }
     });
-
-   
 </script>
 
 <div class="page-container">
   <nav class="navbar">
     <div class="nav-left">
-      <a href="{base}/">
-        <img src="{base}/Logo.png" alt="Logo Les Chevaliers à Poils" class="nav-logo" />
+      <a href="/">
+        <img src="/Logo.png" alt="Logo Les Chevaliers à Poils" class="nav-logo" />
       </a>
       <span class="site-title">Les Chevaliers à Poils</span>
     </div>
     
     <div class="nav-right">
-      <a href="{base}/guide">Comment ça marche</a>
-      <a href="{base}/inscription">S'inscrire</a>
-      <a href="{base}/connexion" class="btn-login" style="text-decoration: none;">Se connecter</a>
+      <a href="/guide">Comment ça marche</a>
+      <a href="/inscription">S'inscrire</a>
+      <a href="/connexion" class="btn-login" style="text-decoration: none;">Se connecter</a>
     </div>
   </nav>
 
-  <header class="hero-section" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('{base}/Fondaccueil.jpg');">
+  <header class="hero-section" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('/Fondaccueil.jpg');">
     <div class="hero-content">
       <h1 class="main-title">Les Chevaliers à Poils</h1>
       <p class="subtitle">
         Votre animal de compagnie est un héros qui s'ignore. 
         Relevez des défis épiques, montez de niveau et devenez une légende du royaume !
       </p>
-      <a href="{base}/connexion" class="btn-adventure" style="text-decoration: none; display: inline-block;">⚔️ Entrer dans l'aventure</a>
+      <a href="/connexion" class="btn-adventure" style="text-decoration: none; display: inline-block;">⚔️ Entrer dans l'aventure</a>
     </div>
   </header>
 </div>
