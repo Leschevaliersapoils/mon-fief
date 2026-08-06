@@ -2,12 +2,11 @@
   import { base } from '$app/paths';
   import { enhance } from '$app/forms';
   
- 
   let { form } = $props();
 </script>
 
 <div class="form-container" style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('{base}/Fondaccueil.jpg');">
-  <form method="POST" use:enhance>
+  <form method="POST" action="?" use:enhance>
     <h1>Ravi de vous revoir</h1>
     <p>Entrez vos identifiants pour retrouver votre écurie.</p>
 
