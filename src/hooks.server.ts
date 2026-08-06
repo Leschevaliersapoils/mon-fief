@@ -30,9 +30,9 @@ export const handle: Handle = async ({ event, resolve }) => {
   }
 
   return resolve(event, {
-    filterSerializedResponseHeaders(name) {
-      // Autorise spécifiquement les headers de Supabase
-      return name === 'content-range' || name === 'x-supabase-parse-le-fief'
-    },
-  })
+        filterSerializedResponseHeaders(name) {
+            // Autorise par défaut tous les headers standards de Supabase et de SvelteKit
+            return name.startsWith('content-') || name.startsWith('x-supabase-');
+        }
+    })
 }

@@ -45,7 +45,7 @@ export const actions: Actions = {
             });
         }
 
-        // 5. Si tout est bon et qu'on a une session, direction la cour avec le préfixe base !
-        throw redirect(303, `${base}/cour`);
+        // 5. Redirection vers la cour
+        throw redirect(303, '/cour');
     }
 };
