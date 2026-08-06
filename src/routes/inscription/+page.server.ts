@@ -1,4 +1,5 @@
 import { fail, redirect } from '@sveltejs/kit';
+import { base } from '$app/paths';
 import type { Actions } from './$types';
 
 export const actions: Actions = {
@@ -22,8 +23,6 @@ export const actions: Actions = {
             email,
             password,
             options: {
-                // Ces données sont envoyées à la table 'auth.users' 
-                // et seront lues par ton Trigger SQL pour remplir la table 'Joueurs'
                 data: {
                     username: username
                 }
@@ -36,8 +35,15 @@ export const actions: Actions = {
             return fail(400, { error: authError.message });
         }
 
-        // 4. Si tout est bon, on redirige vers la cour !
-        // Le Trigger SQL s'occupe tout seul de créer la ligne dans la table 'Joueurs'
-        throw redirect(303, '/cour');
+        // 4. Vérification si la confirmation par email bloque la connexion immédiate
+        // Si Supabase demande de confirmer l'email, il n'y a pas de session active
+        if (!data.session) {
+            return fail(400, { 
+                error: "Inscription réussie ! Cependant, veuillez vérifier vos e-mails pour confirmer votre compte avant de vous connecter." 
+            });
+        }
+
+        // 5. Si tout est bon et qu'on a une session, direction la cour avec le préfixe base !
+        throw redirect(303, `${base}/cour`);
     }
 };

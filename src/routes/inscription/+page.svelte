@@ -2,30 +2,24 @@
   import { base } from '$app/paths';
   import { enhance } from '$app/forms';
   
-  // Voici la nouvelle syntaxe Svelte 5
-  let { form } = $props(); 
+  let { form } = $props();
 </script>
 
 <div class="form-container" style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('{base}/Fondaccueil.jpg');">
-  <!-- 
-    method="POST" : dit au formulaire d'envoyer les données au serveur.
-    use:enhance : permet d'envoyer les données sans faire clignoter la page (SvelteKit gère ça en arrière-plan).
-  -->
-  <form method="POST" use:enhance>
+  <form method="POST" action="?" use:enhance>
     <h1>Devenir Chevalier</h1>
     <p>Créez votre compte de joueur pour commencer l'aventure.</p>
 
-    <!-- Affichage d'une erreur si Supabase en renvoie une -->
+    <!-- Affichage des erreurs d'inscription -->
     {#if form?.error}
-      <div class="error-msg">
+      <p style="color: #ff4d4d; background: rgba(255,0,0,0.1); padding: 10px; border-radius: 5px; font-size: 0.8rem;">
         ⚠️ {form.error}
-      </div>
+      </p>
     {/if}
 
     <div class="input-group">
       <label for="username">Pseudo</label>
-      <!-- IMPORTANT : l'attribut 'name' doit correspondre à ce que le serveur cherche -->
-      <input type="text" id="username" name="username" placeholder="Ex: Arthur_Du_Lac" required />
+      <input type="text" id="username" name="username" placeholder="Votre nom de preux" required />
     </div>
 
     <div class="input-group">
@@ -41,6 +35,8 @@
     <button type="submit" class="btn-submit">Rejoindre la Table Ronde ⚔️</button>
     
     <div class="footer-links">
+      <a href="{base}/connexion" class="link">Déjà un compte ? Se connecter</a>
+      <br />
       <a href="{base}/" class="back-link">Retour au château</a>
     </div>
   </form>
@@ -67,7 +63,7 @@
     background: rgba(30, 30, 30, 0.95);
     padding: 40px;
     border-radius: 15px;
-    border: 1px solid #3a7a34;
+    border: 1px solid #fbbf24;
     width: 100%;
     max-width: 400px;
     box-shadow: 0 20px 50px rgba(0,0,0,0.5);
@@ -87,16 +83,6 @@
     font-size: 0.9rem;
     color: #bbb;
     margin-bottom: 30px;
-  }
-
-  .error-msg {
-    background: rgba(255, 77, 77, 0.2);
-    color: #ff4d4d;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    font-size: 0.85rem;
-    border: 1px solid #ff4d4d;
   }
 
   .input-group {
@@ -119,18 +105,12 @@
     border: 1px solid #444;
     color: white;
     border-radius: 6px;
-    transition: border-color 0.3s;
     box-sizing: border-box;
   }
 
-  input:focus {
-    outline: none;
-    border-color: #fbbf24;
-  }
-
   .btn-submit {
-    background: #3a7a34;
-    color: white;
+    background: #22c55e;
+    color: #fff;
     border: none;
     padding: 15px;
     width: 100%;
@@ -139,13 +119,13 @@
     font-size: 1rem;
     cursor: pointer;
     margin-top: 10px;
-    transition: transform 0.2s, background 0.2s;
+    transition: transform 0.2s;
     box-sizing: border-box;
   }
 
   .btn-submit:hover {
-    background: #46923f;
     transform: scale(1.02);
+    background: #16a34a;
   }
 
   .footer-links {
@@ -154,14 +134,18 @@
     padding-top: 15px;
   }
 
+  .link {
+    color: #fbbf24;
+    text-decoration: none;
+    font-size: 0.85rem;
+  }
+
   .back-link {
+    display: inline-block;
+    margin-top: 10px;
     color: #888;
     text-decoration: none;
     font-size: 0.8rem;
-  }
-
-  .back-link:hover {
-    color: #fbbf24;
   }
 
   /* --- VERSION MOBILE --- */
