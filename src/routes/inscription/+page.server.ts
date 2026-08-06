@@ -18,6 +18,7 @@ export const actions: Actions = {
             return fail(400, { error: 'Tous les champs sont obligatoires, Messire !' });
         }
 
+
         // 2. Tentative d'inscription sur Supabase Auth
         const { data, error: authError } = await supabase.auth.signUp({
             email,
@@ -25,7 +26,8 @@ export const actions: Actions = {
             options: {
                 data: {
                     username: username
-                }
+                },
+                emailRedirectTo: `${event.url.origin}${base}/cour`
             }
         });
 
