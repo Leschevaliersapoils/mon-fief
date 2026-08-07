@@ -1,6 +1,6 @@
 <script>
   import { onMount } from 'svelte';
-  import { supabase } from '$lib/supabaseClient';
+  import { supabase } from '$lib/supabase';
   import { PUBLIC_SUPABASE_URL } from '$env/static/public';
 
   let status = "Test en cours...";
