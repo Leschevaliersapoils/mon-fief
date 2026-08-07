@@ -1,3 +1,7 @@
+<script>
+  import { base } from '$app/paths';
+</script>
+
 <div class="guide-container">
   <header class="guide-header">
     <h1>Le Grimoire des Aventuriers</h1>

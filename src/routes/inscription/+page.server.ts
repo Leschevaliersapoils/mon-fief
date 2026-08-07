@@ -4,7 +4,7 @@ import type { Actions } from './$types';
 
 export const actions: Actions = {
     default: async (event) => {
-        const { request, locals } = event;
+        const { request, locals, url } = event;
         const supabase = locals.supabase;
 
         // 1. Récupération des données du formulaire
@@ -18,16 +18,14 @@ export const actions: Actions = {
             return fail(400, { error: 'Tous les champs sont obligatoires, Messire !' });
         }
 
-
-        // 2. Tentative d'inscription sur Supabase Auth
+        // 2. Tentative d'inscription sur Supabase Auth sans redirection complexe
         const { data, error: authError } = await supabase.auth.signUp({
             email,
             password,
             options: {
                 data: {
                     username: username
-                },
-                emailRedirectTo: `${event.url.origin}${base}/cour`
+                }
             }
         });
 
@@ -37,15 +35,15 @@ export const actions: Actions = {
             return fail(400, { error: authError.message });
         }
 
-        // 4. Vérification si la confirmation par email bloque la connexion immédiate
-        // Si Supabase demande de confirmer l'email, il n'y a pas de session active
+        // 4. Si la confirmation par e-mail est active, pas de session immédiate
         if (!data.session) {
-            return fail(400, { 
-                error: "Inscription réussie ! Cependant, veuillez vérifier vos e-mails pour confirmer votre compte avant de vous connecter." 
-            });
+            return {
+                success: true,
+                message: "Inscription réussie ! Veuillez vérifier vos e-mails pour confirmer votre compte."
+            };
         }
 
-        // 5. Redirection vers la cour
-        throw redirect(303, '/cour');
+        // 5. Si tout est bon et qu'on a une session active, direction la cour
+        throw redirect(303, `${base}/cour`);
     }
 };

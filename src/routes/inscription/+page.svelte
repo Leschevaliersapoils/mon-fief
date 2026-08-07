@@ -19,7 +19,7 @@
 
     <div class="input-group">
       <label for="username">Pseudo</label>
-      <input type="text" id="username" name="username" placeholder="Votre nom de preux" required />
+      <input type="text" id="username" name="username" placeholder="Votre surnom" required />
     </div>
 
     <div class="input-group">

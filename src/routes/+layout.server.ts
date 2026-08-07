@@ -3,23 +3,33 @@ import { base } from '$app/paths';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ locals, url }) => {
-   
     const { session, user } = await locals.safeGetSession();
 
-    const pagesPubliques = [`${base}/`, `${base}/inscription`, `${base}/connexion`];
-    const estSurPagePublique = pagesPubliques.includes(url.pathname);
+    // Nettoyage du pathname (enlève le slash de fin s'il y en a un)
+    const cheminActuel = url.pathname.replace(/\/$/, "");
+    const baseClean = (base || '').replace(/\/$/, "");
 
-    // 2. Sécurité basée sur l'objet 'user' (vérifié côté serveur)
+    // Liste de toutes les routes publiques autorisées sans connexion
+    const routesPubliques = [
+        `${baseClean}`,
+        `${baseClean}/`,
+        `${baseClean}/inscription`,
+        `${baseClean}/connexion`,
+        `${baseClean}/guide`
+    ];
+
+    // On vérifie si le chemin actuel correspond à l'une des pages publiques
+    const estSurPagePublique = routesPubliques.includes(cheminActuel) || cheminActuel === "";
+
+    // Si l'utilisateur n'est pas connecté ET qu'il n'est pas sur une page publique -> Redirection vers l'accueil
     if (!user && !estSurPagePublique) {
-        throw redirect(303, `${base}/`);
+        throw redirect(303, `${base || ''}/`);
     }
 
-    // 3. Récupération des données du joueur et du nombre de messages non lus
     let surnom = null;
     let nbMessagesNonLus = 0;
 
     if (user) {
-        // On utilise directement locals.supabase qui est déjà authentifié
         const [joueurRes, messageRes] = await Promise.all([
             locals.supabase
                 .from('Joueurs')
@@ -44,8 +54,8 @@ export const load: LayoutServerLoad = async ({ locals, url }) => {
     }
 
     return {
-        session, // Nécessaire pour le client (browser)
-        user,    // L'objet utilisateur sûr
+        session,
+        user,
         surnom,
         nbMessagesNonLus
     };
