@@ -4,21 +4,22 @@ import type { Actions } from './$types';
 
 export const actions: Actions = {
     default: async (event) => {
-        const { request, locals, url } = event;
+        const { request, locals } = event;
         const supabase = locals.supabase;
 
-        // 1. Récupération des données du formulaire
         const formData = await request.formData();
         const email = formData.get('email') as string;
         const password = formData.get('password') as string;
         const username = formData.get('username') as string;
 
-        // Petite vérification de sécurité rapide
         if (!email || !password || !username) {
             return fail(400, { error: 'Tous les champs sont obligatoires, Messire !' });
         }
 
-        // 2. Tentative d'inscription sur Supabase Auth sans redirection complexe
+        if (password.length < 6) {
+            return fail(400, { error: 'Le mot de passe doit faire au moins 6 caractères.' });
+        }
+
         const { data, error: authError } = await supabase.auth.signUp({
             email,
             password,
@@ -29,13 +30,25 @@ export const actions: Actions = {
             }
         });
 
-        // 3. Gestion des erreurs (ex: email déjà utilisé ou mot de passe trop court)
         if (authError) {
-            console.error("Erreur d'inscription:", authError.message);
+            console.error("Erreur d'inscription Supabase:", authError);
             return fail(400, { error: authError.message });
         }
 
-        // 4. Si la confirmation par e-mail est active, pas de session immédiate
+        // Si l'utilisateur est bien créé, on s'assure d'ajouter le profil dans ta table 'Joueurs'
+        if (data.user) {
+            const { error: profileError } = await supabase
+                .from('Joueurs')
+                .upsert({
+                    id_joueur: data.user.id,
+                    Surnom: username
+                });
+
+            if (profileError) {
+                console.error("Erreur création profil Joueur:", profileError.message);
+            }
+        }
+
         if (!data.session) {
             return {
                 success: true,
@@ -43,7 +56,6 @@ export const actions: Actions = {
             };
         }
 
-        // 5. Si tout est bon et qu'on a une session active, direction la cour
         throw redirect(303, `${base}/cour`);
     }
 };
