@@ -14,41 +14,49 @@
     </div>
   </header>
 
-  <div class="cour-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; width: 100%; max-width: 1200px; margin-bottom: 20px;">
+  <div class="cour-grid">
     
-    <div class="card parchemin-style" style="height: 480px; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 40px 15px; box-sizing: border-box; transition: transform 0.3s ease; background-image: url('{base}/cour/colonne.png'); background-size: 100% 100%; background-position: center; background-repeat: no-repeat;">
-      <img src="{base}/cour/chenil.png" alt="Chenil" class="illustration" style="width: 220px; height: 220px; object-fit: contain; filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.3));" />
-      <div class="card-body" style="text-align: center; display: flex; flex-direction: column; align-items: center; flex-grow: 1; justify-content: center;">
-        <h2 style="font-family: 'Cinzel', serif; color: #3d2b1f; font-size: 0.95rem; margin: 10px 0 5px 0; text-transform: uppercase;">Chenil des Héros</h2>
-        <p class="subtitle" style="font-size: 0.75rem; color: #5d4a3a; font-style: italic; line-height: 1.3; margin-bottom: 15px; min-height: 45px; display: flex; align-items: center; justify-content: center;">Le refuge de vos braves compagnons. Recrutez vos héros et suivez les.</p>
-        <a href="{base}/heros" class="btn-action">ENTREZ</a>
+    <div class="card parchemin-style">
+      <div class="card-inner-mobile">
+        <img src="{base}/cour/chenil.png" alt="Chenil" class="illustration" style="filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.3));" />
+        <div class="card-body">
+          <h2 style="font-family: 'Cinzel', serif; color: #3d2b1f; text-transform: uppercase;">Chenil des Héros</h2>
+          <p class="subtitle" style="font-style: italic;">Le refuge de vos braves compagnons. Recrutez vos héros et suivez les.</p>
+          <a href="{base}/heros" class="btn-action">ENTREZ</a>
+        </div>
       </div>
     </div>
 
-    <div class="card parchemin-style" style="height: 480px; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 40px 15px; box-sizing: border-box; transition: transform 0.3s ease; background-image: url('{base}/cour/colonne.png'); background-size: 100% 100%; background-position: center; background-repeat: no-repeat;">
-      <img src="{base}/cour/tableau.png" alt="Tableau" class="illustration" style="width: 220px; height: 220px; object-fit: contain; filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.3));" />
-      <div class="card-body" style="text-align: center; display: flex; flex-direction: column; align-items: center; flex-grow: 1; justify-content: center;">
-        <h2 style="font-family: 'Cinzel', serif; color: #3d2b1f; font-size: 0.95rem; margin: 10px 0 5px 0; text-transform: uppercase;">Tableau des Quêtes</h2>
-        <p class="subtitle" style="font-size: 0.75rem; color: #5d4a3a; font-style: italic; line-height: 1.3; margin-bottom: 15px; min-height: 45px; display: flex; align-items: center; justify-content: center;">Le royaume a besoin d'aide. Quel exploit accomplirez-vous ?</p>
-        <a href="{base}/quete" class="btn-action">CONSULTEZ</a>
+    <div class="card parchemin-style">
+      <div class="card-inner-mobile">
+        <img src="{base}/cour/tableau.png" alt="Tableau" class="illustration" style="filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.3));" />
+        <div class="card-body">
+          <h2 style="font-family: 'Cinzel', serif; color: #3d2b1f; text-transform: uppercase;">Tableau des Quêtes</h2>
+          <p class="subtitle" style="font-style: italic;">Le royaume a besoin d'aide. Quel exploit accomplirez-vous ?</p>
+          <a href="{base}/quete" class="btn-action">CONSULTEZ</a>
+        </div>
       </div>
     </div>
 
-    <div class="card parchemin-style" style="height: 480px; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 40px 15px; box-sizing: border-box; transition: transform 0.3s ease; background-image: url('{base}/cour/colonne.png'); background-size: 100% 100%; background-position: center; background-repeat: no-repeat;">
-      <img src="{base}/cour/chronique.png" alt="Chronique" class="illustration" style="width: 220px; height: 220px; object-fit: contain; filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.3));" />
-      <div class="card-body" style="text-align: center; display: flex; flex-direction: column; align-items: center; flex-grow: 1; justify-content: center;">
-        <h2 style="font-family: 'Cinzel', serif; color: #3d2b1f; font-size: 0.95rem; margin: 10px 0 5px 0; text-transform: uppercase;">Les Chroniques</h2>
-        <p class="subtitle" style="font-size: 0.75rem; color: #5d4a3a; font-style: italic; line-height: 1.3; margin-bottom: 15px; min-height: 45px; display: flex; align-items: center; justify-content: center;">Suivez les exploits du Royaume et de vos amis</p>
-        <a href="{base}/chronique" class="btn-action">FEUILLETEZ</a>
+    <div class="card parchemin-style">
+      <div class="card-inner-mobile">
+        <img src="{base}/cour/chronique.png" alt="Chronique" class="illustration" style="filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.3));" />
+        <div class="card-body">
+          <h2 style="font-family: 'Cinzel', serif; color: #3d2b1f; text-transform: uppercase;">Les Chroniques</h2>
+          <p class="subtitle" style="font-style: italic;">Suivez les exploits du Royaume et de vos amis</p>
+          <a href="{base}/chronique" class="btn-action">FEUILLETEZ</a>
+        </div>
       </div>
     </div>
 
-    <div class="card parchemin-style" style="height: 480px; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 40px 15px; box-sizing: border-box; transition: transform 0.3s ease; background-image: url('{base}/cour/colonne.png'); background-size: 100% 100%; background-position: center; background-repeat: no-repeat;">
-      <img src="{base}/cour/legende.png" alt="Légende" class="illustration" style="width: 220px; height: 220px; object-fit: contain; filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.3));" />
-      <div class="card-body" style="text-align: center; display: flex; flex-direction: column; align-items: center; flex-grow: 1; justify-content: center;">
-        <h2 style="font-family: 'Cinzel', serif; color: #3d2b1f; font-size: 0.95rem; margin: 10px 0 5px 0; text-transform: uppercase;">Le Panthéon des Légendes</h2>
-        <p class="subtitle" style="font-size: 0.75rem; color: #5d4a3a; font-style: italic; line-height: 1.3; margin-bottom: 15px; min-height: 45px; display: flex; align-items: center; justify-content: center;">Gravez votre nom aux côtés des plus grands protecteurs.</p>
-        <a href="{base}/pantheon" class="btn-action">ADMIREZ</a>
+    <div class="card parchemin-style">
+      <div class="card-inner-mobile">
+        <img src="{base}/cour/legende.png" alt="Légende" class="illustration" style="filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.3));" />
+        <div class="card-body">
+          <h2 style="font-family: 'Cinzel', serif; color: #3d2b1f; text-transform: uppercase;">Le Panthéon des Légendes</h2>
+          <p class="subtitle" style="font-style: italic;">Gravez votre nom aux côtés des plus grands protecteurs.</p>
+          <a href="{base}/pantheon" class="btn-action">ADMIREZ</a>
+        </div>
       </div>
     </div>
     
@@ -64,7 +72,74 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Poppins:ital,wght@0,400;0,600;1,400&display=swap');
 
-.card:hover { transform: translateY(-10px); }
+.cour-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 20px;
+}
+
+.card {
+  height: 480px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 40px 15px;
+  box-sizing: border-box;
+  transition: transform 0.3s ease;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url('./cour/colonne.png');
+}
+
+.card:hover { 
+  transform: translateY(-10px); 
+}
+
+.card-inner-mobile {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.illustration {
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
+}
+
+.card-body {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.card h2 {
+  font-size: 0.95rem;
+  margin: 10px 0 5px 0;
+}
+
+.subtitle {
+  font-size: 0.75rem;
+  color: #5d4a3a;
+  line-height: 1.3;
+  margin-bottom: 15px;
+  min-height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .btn-action {
   background: #4a3721;
@@ -87,9 +162,13 @@
   transform: scale(1.05);
 }
 
-.forge-banner-container:hover { transform: translateY(-5px); }
+.forge-banner-container:hover { 
+  transform: translateY(-5px); 
+}
 
-.flames-animation { animation: dance-flames 1.5s infinite ease-in-out; }
+.flames-animation { 
+  animation: dance-flames 1.5s infinite ease-in-out; 
+}
 
 @keyframes dance-flames {
   0% {
@@ -107,63 +186,97 @@
 }
 
 @media (max-width: 1000px) {
-  .cour-grid { grid-template-columns: repeat(2, 1fr) !important; }
-  .cour-banner { max-width: 90% !important; }
-  .forge-banner-container { max-width: 80% !important; }
+  .cour-grid { 
+    grid-template-columns: repeat(2, 1fr); 
+  }
+  .cour-banner { 
+    max-width: 90%; 
+  }
+  .forge-banner-container { 
+    max-width: 80%; 
+  }
 }
 
-/* --- ADAPTATION MOBILE --- */
+/* --- ADAPTATION MOBILE (GSM) --- */
 @media (max-width: 600px) {
-  .cour-container { padding: 15px 5px !important; }
+  .cour-container { 
+    padding: 15px 5px; 
+  }
 
   .cour-banner {
-    height: 100px !important;
-    max-width: 95% !important;
+    height: 100px;
+    max-width: 95%;
     opacity: 0.9;
   }
 
-  .banner-content { padding: 0 20px !important; }
-  .banner-content h1 { font-size: 1.1rem !important; }
-  .banner-content p { font-size: 0.7rem !important; }
+  .banner-content { 
+    padding: 0 20px; 
+  }
+  .banner-content h1 { 
+    font-size: 1.1rem; 
+  }
+  .banner-content p { 
+    font-size: 0.7rem; 
+  }
 
   .cour-grid {
-    grid-template-columns: 1fr !important;
-    gap: 10px !important;
-    max-width: 95% !important;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    max-width: 95%;
   }
 
   .card {
-    height: auto !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    padding: 10px 15px !important;
-    gap: 15px !important;
-    background-image: url('{base}/cour/colonnegsm.png') !important;
-    background-size: 100% 100% !important;
+    height: auto;
+    min-height: unset;
+    padding: 12px 15px;
+    background-image: url('./cour/parchemin.png');
+    background-size: 100% 100%;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+  }
+
+  .card-inner-mobile {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    height: auto;
   }
 
   .illustration {
-    width: 75px !important;
-    height: 75px !important;
+    width: 65px;
+    height: 65px;
     flex-shrink: 0;
   }
 
   .card-body {
-    align-items: flex-start !important;
-    text-align: left !important;
-    justify-content: center !important;
+    align-items: flex-start;
+    text-align: left;
+    justify-content: center;
+    flex-grow: 1;
   }
 
-  .card h2 { font-size: 0.9rem !important; margin: 0 0 2px 0 !important; }
+  .card h2 { 
+    font-size: 0.8rem; 
+    margin: 0 0 2px 0; 
+    color: #3d2b1f;
+  }
 
   .subtitle {
-    font-size: 0.65rem !important;
-    margin-bottom: 8px !important;
-    min-height: auto !important;
-    justify-content: flex-start !important;
+    font-size: 0.6rem;
+    margin-bottom: 6px;
+    min-height: auto;
+    justify-content: flex-start;
+    text-align: left;
+    color: #5d4a3a;
   }
 
-  .btn-action { padding: 5px 12px !important; font-size: 0.65rem !important; }
-  .forge-banner-container { max-width: 95% !important; }
+  .btn-action { 
+    padding: 4px 10px; 
+    font-size: 0.6rem; 
+  }
+
+  .forge-banner-container { 
+    max-width: 95%; 
+  }
 }
 </style>
