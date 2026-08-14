@@ -16,7 +16,7 @@
 
   <div class="cour-grid">
     
-    <div class="card">
+    <div class="card" style="background-image: url('{base}/cour/colonne.png');">
       <div class="card-inner">
         <img src="{base}/cour/chenil.png" alt="Chenil" class="illustration" style="filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.3));" />
         <div class="card-body">
@@ -27,7 +27,7 @@
       </div>
     </div>
 
-    <div class="card">
+    <div class="card" style="background-image: url('{base}/cour/colonne.png');">
       <div class="card-inner">
         <img src="{base}/cour/tableau.png" alt="Tableau" class="illustration" style="filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.3));" />
         <div class="card-body">
@@ -38,7 +38,7 @@
       </div>
     </div>
 
-    <div class="card">
+    <div class="card" style="background-image: url('{base}/cour/colonne.png');">
       <div class="card-inner">
         <img src="{base}/cour/chronique.png" alt="Chronique" class="illustration" style="filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.3));" />
         <div class="card-body">
@@ -49,7 +49,7 @@
       </div>
     </div>
 
-    <div class="card">
+    <div class="card" style="background-image: url('{base}/cour/colonne.png');">
       <div class="card-inner">
         <img src="{base}/cour/legende.png" alt="Légende" class="illustration" style="filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.3));" />
         <div class="card-body">
@@ -95,7 +95,6 @@
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
-  background-image: url('./cour/colonne.png');
 }
 
 .card:hover { 
@@ -230,9 +229,7 @@
     height: auto;
     min-height: unset;
     padding: 12px 15px;
-    background-image: url('./cour/parchemin.png');
-    background-size: 100% 100%;
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+    
   }
 
   .card-inner {
