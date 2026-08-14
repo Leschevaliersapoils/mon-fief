@@ -16,8 +16,8 @@
 
   <div class="cour-grid">
     
-    <div class="card parchemin-style">
-      <div class="card-inner-mobile">
+    <div class="card">
+      <div class="card-inner">
         <img src="{base}/cour/chenil.png" alt="Chenil" class="illustration" style="filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.3));" />
         <div class="card-body">
           <h2 style="font-family: 'Cinzel', serif; color: #3d2b1f; text-transform: uppercase;">Chenil des Héros</h2>
@@ -27,8 +27,8 @@
       </div>
     </div>
 
-    <div class="card parchemin-style">
-      <div class="card-inner-mobile">
+    <div class="card">
+      <div class="card-inner">
         <img src="{base}/cour/tableau.png" alt="Tableau" class="illustration" style="filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.3));" />
         <div class="card-body">
           <h2 style="font-family: 'Cinzel', serif; color: #3d2b1f; text-transform: uppercase;">Tableau des Quêtes</h2>
@@ -38,8 +38,8 @@
       </div>
     </div>
 
-    <div class="card parchemin-style">
-      <div class="card-inner-mobile">
+    <div class="card">
+      <div class="card-inner">
         <img src="{base}/cour/chronique.png" alt="Chronique" class="illustration" style="filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.3));" />
         <div class="card-body">
           <h2 style="font-family: 'Cinzel', serif; color: #3d2b1f; text-transform: uppercase;">Les Chroniques</h2>
@@ -49,8 +49,8 @@
       </div>
     </div>
 
-    <div class="card parchemin-style">
-      <div class="card-inner-mobile">
+    <div class="card">
+      <div class="card-inner">
         <img src="{base}/cour/legende.png" alt="Légende" class="illustration" style="filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.3));" />
         <div class="card-body">
           <h2 style="font-family: 'Cinzel', serif; color: #3d2b1f; text-transform: uppercase;">Le Panthéon des Légendes</h2>
@@ -81,6 +81,7 @@
   margin-bottom: 20px;
 }
 
+/* Style Bureau : Colonne verticale */
 .card {
   height: 480px;
   position: relative;
@@ -101,7 +102,7 @@
   transform: translateY(-10px); 
 }
 
-.card-inner-mobile {
+.card-inner {
   width: 100%;
   height: 100%;
   display: flex;
@@ -197,7 +198,7 @@
   }
 }
 
-/* --- ADAPTATION MOBILE (GSM) --- */
+/* --- ADAPTATION MOBILE (GSM) : Parchemin horizontal --- */
 @media (max-width: 600px) {
   .cour-container { 
     padding: 15px 5px; 
@@ -234,7 +235,7 @@
     filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
   }
 
-  .card-inner-mobile {
+  .card-inner {
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
