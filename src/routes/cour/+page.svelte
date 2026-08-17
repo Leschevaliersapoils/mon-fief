@@ -20,7 +20,7 @@
 
   <div class="cour-grid">
     
-    <div class="card" style="--card-bg: {colonneBg};">
+    <div class="card" style="--card-bg: {colonneBg}; --card-bg-mobile: {parcheminBg};">
       <div class="card-inner">
         <img src="{base}/cour/chenil.png" alt="Chenil" class="illustration" style="filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.3));" />
         <div class="card-body">
@@ -31,7 +31,7 @@
       </div>
     </div>
 
-    <div class="card" style="--card-bg: {colonneBg};">
+    <div class="card" style="--card-bg: {colonneBg}; --card-bg-mobile: {parcheminBg};">
       <div class="card-inner">
         <img src="{base}/cour/tableau.png" alt="Tableau" class="illustration" style="filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.3));" />
         <div class="card-body">
@@ -42,7 +42,7 @@
       </div>
     </div>
 
-    <div class="card" style="--card-bg: {colonneBg};">
+    <div class="card" style="--card-bg: {colonneBg}; --card-bg-mobile: {parcheminBg};">
       <div class="card-inner">
         <img src="{base}/cour/chronique.png" alt="Chronique" class="illustration" style="filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.3));" />
         <div class="card-body">
@@ -53,7 +53,7 @@
       </div>
     </div>
 
-    <div class="card" style="--card-bg: {colonneBg};">
+    <div class="card" style="--card-bg: {colonneBg}; --card-bg-mobile: {parcheminBg};">
       <div class="card-inner">
         <img src="{base}/cour/legende.png" alt="Légende" class="illustration" style="filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.3));" />
         <div class="card-body">
@@ -234,7 +234,7 @@
     height: auto;
     min-height: unset;
     padding: 12px 15px;
-    background-image: url('{base}/cour/parchemin.png');
+    background-image: var(--card-bg-mobile);
     background-size: 100% 100%;
     filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
   }
