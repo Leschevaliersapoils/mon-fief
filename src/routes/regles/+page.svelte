@@ -163,27 +163,13 @@
         background-repeat: no-repeat;
     }
 
-    /* Style du lien de retour */
-    .btn-retour-texte {
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        z-index: 10;
-        font-family: 'MedievalSharp', cursive;
-        font-size: 1.5rem;
-        color: #ffd700;
-        text-decoration: none;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-        transition: transform 0.2s, color 0.2s;
-    }
-    
-    .btn-retour-texte:hover {
-        transform: scale(1.05);
-        color: #fff;
-    }
 
     .image-titre { margin-bottom: 10px; }
-    .image-titre img { max-width: 800px; height: auto; }
+    .image-titre img { 
+        width: 100%;
+        max-width: 800px;
+        height: auto;
+    }
 
     .header img { width: 300px; margin-bottom: 30px; }
 

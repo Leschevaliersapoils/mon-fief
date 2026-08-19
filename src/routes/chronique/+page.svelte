@@ -89,8 +89,8 @@
 
   <main class="main-container" style="max-width: 1300px; margin: 0 auto;">
     
-    <!-- VERSION DESKTOP : Onglets classiques côte à côte -->
-    <div class="desktop-tabs" style="display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; width: 100%;">
+    <!-- VERSION DESKTOP : Onglets classiques côte à côte (Style géré dans <style>) -->
+    <div class="desktop-tabs">
       {#each tabsList as tab}
         <button class:active={activeTab === tab.id} onclick={() => switchTab(tab.id)}>
           {tab.label}
@@ -160,11 +160,20 @@
 
 .section-banner { display: block; width: 100%; max-height: 70px; object-fit: contain; margin-bottom: 25px; }
 
-/* Desktop Tabs */
+/* Desktop Tabs par défaut */
+.desktop-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 30px;
+  width: 100%;
+}
+
 .desktop-tabs button { background: linear-gradient(to bottom, #e1c699, #c8a268); border: 2px solid #8b4513; border-radius: 8px; padding: 12px 30px; font-family: 'Crimson Text', serif; color: #5a3728; font-weight: bold; font-size: 1.1rem; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.15); transition: all 0.2s; }
 .desktop-tabs button:hover { background: linear-gradient(to bottom, #d2b48c, #b8860b); transform: translateY(-2px); }
 .desktop-tabs button.active { background: linear-gradient(to bottom, #8b4513, #5a3728); color: #fff; border-color: #ffd700; box-shadow: inset 0 2px 4px rgba(0,0,0,0.3); }
 
+/* Caché par défaut sur grand écran */
 .mobile-filter-slider { display: none; }
 
 .loading-text { text-align: center; font-family: 'Crimson Text', serif; font-size: 1.2rem; color: #5a3728; padding: 20px; }
@@ -201,15 +210,17 @@
   .main-banniere { max-width: 100%; }
   .section-banner { max-height: 35px; margin-bottom: 12px; }
 
-  .desktop-tabs { display: none; }
+  /* CACHE LES ONGLETS DESKTOP SUR MOBILE */
+  .desktop-tabs { display: none !important; }
 
+  /* AFFICHE LE SLIDER MOBILE AVEC LES FLÈCHES */
   .mobile-filter-slider { display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 15px; width: 100%; }
 
   .current-filter-display { background: linear-gradient(to bottom, #8b4513, #5a3728); border: 1.5px solid #ffd700; border-radius: 6px; padding: 6px 10px; text-align: center; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.3); flex-grow: 1; }
 
-  .filter-text { font-size: 0.9rem; }
+  .filter-text { font-size: 0.9rem; color: #f4e4bc; font-family: 'Crimson Text', serif; font-weight: bold; }
 
-  .slider-arrow { width: 32px; height: 32px; font-size: 1rem; border-width: 1.5px; border-radius: 6px; }
+  .slider-arrow { background: linear-gradient(to bottom, #e1c699, #c8a268); color: #5a3728; width: 32px; height: 32px; font-size: 1rem; border: 1.5px solid #8b4513; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
   
   .events-list { gap: 10px; }
 
