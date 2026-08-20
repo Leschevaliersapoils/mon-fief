@@ -20,7 +20,7 @@
             const estMonAvatarPerso = Number(img.id_heros) === Number(hero.id_heros);
             return estAvatarDeBase || estMonAvatarPerso;
          }) 
-        : []
+        : []git add .
 );
 
     let prefixesDisponibles = $derived(data.disponiblePrefixes || []);
@@ -54,7 +54,7 @@ async function validerModifications() {
         console.error("Erreur lors de la mise à jour :", error);
     } else {
         fermerMenu();
-        await invalidateAll();  
+        window.location.reload();  
     }
 }
 
