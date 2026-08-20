@@ -1,6 +1,7 @@
 <script lang="ts">
     import { base } from '$app/paths';
     import { supabase } from '$lib/supabase';
+    import { invalidateAll } from '$app/navigation';
     let { data } = $props();
 
     let hero = $state({ 
@@ -53,7 +54,7 @@ async function validerModifications() {
         console.error("Erreur lors de la mise à jour :", error);
     } else {
         fermerMenu();
-        window.location.reload();  
+        await invalidateAll();  
     }
 }
 
