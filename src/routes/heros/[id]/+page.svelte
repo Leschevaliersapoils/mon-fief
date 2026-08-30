@@ -1,5 +1,6 @@
 <script lang="ts">
     import { base } from '$app/paths';
+    import { page } from '$app/state';
     import { supabase } from '$lib/supabase';
     import { invalidateAll } from '$app/navigation';
     let { data } = $props();
@@ -29,7 +30,7 @@
     let suffixeSelectionne = $state(hero.id_suffixe);
 
     // URL publique ciblée : /ficheheros/[id_du_heros] avec le même ID à la fin
-    let urlPartage = $derived(`${window.location.origin}${base}/ficheheros/${hero.id_heros}`);
+    let urlPartage = $derived(`${page.url.origin}${base}/ficheheros/${hero.id_heros}`);
 
 function ouvrirMenu() {
     sexeSelectionne = hero.sexe;
