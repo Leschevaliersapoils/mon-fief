@@ -6,45 +6,22 @@
 </script>
 
 <div class="form-container" style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('{base}/Fondaccueil.jpg');">
-  <form method="POST" action="?/login" use:enhance>
-    <h1>Ravi de vous revoir</h1>
-    <p>Entrez vos identifiants pour retrouver votre écurie.</p>
+  <form method="POST" action="?/updatePassword" use:enhance>
+    <h1>Nouveau Sésame</h1>
+    <p>Choisissez un nouveau mot de passe pour votre compte, Messire.</p>
 
-    <!-- Affichage des erreurs ou messages de succès -->
     {#if form?.error}
       <p style="color: #ff4d4d; background: rgba(255,0,0,0.1); padding: 10px; border-radius: 5px; font-size: 0.8rem; margin-bottom: 20px;">
         ⚠️ {form.error}
       </p>
     {/if}
 
-    {#if form?.success}
-      <p style="color: #22c55e; background: rgba(34,197,94,0.1); padding: 10px; border-radius: 5px; font-size: 0.8rem; margin-bottom: 20px;">
-        ✨ {form.message}
-      </p>
-    {/if}
-
     <div class="input-group">
-      <label for="email">Adresse de messagerie</label>
-      <input type="email" id="email" name="email" placeholder="votre@email.com" required />
+      <label for="password">Nouveau mot de passe</label>
+      <input type="password" id="password" name="password" placeholder="••••••••" required minlength="6" />
     </div>
 
-    <div class="input-group">
-      <label for="password">Mot de passe</label>
-      <input type="password" id="password" name="password" placeholder="••••••••" />
-    </div>
-
-    <button type="submit" class="btn-submit">Entrer dans le Donjon 🏰</button>
-    
-    <!-- Bouton secondaire pour demander la réinitialisation -->
-    <button type="submit" formaction="?/reset" class="btn-reset">
-      Mot de passe oublié ? 📜
-    </button>
-
-    <div class="footer-links">
-      <a href="{base}/inscription" class="link">Pas encore chevalier ? S'inscrire</a>
-      <br />
-      <a href="{base}/" class="back-link">Retour au château</a>
-    </div>
+    <button type="submit" class="btn-submit">Mettre à jour le mot de passe 🛡️</button>
   </form>
 </div>
 
@@ -132,54 +109,5 @@
   .btn-submit:hover {
     transform: scale(1.02);
     background: #fcd34d;
-  }
-
-  .btn-reset {
-    background: transparent;
-    color: #fbbf24;
-    border: 1px dashed #fbbf24;
-    padding: 10px;
-    width: 100%;
-    border-radius: 8px;
-    font-size: 0.85rem;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: background 0.2s;
-    box-sizing: border-box;
-  }
-
-  .btn-reset:hover {
-    background: rgba(251, 191, 36, 0.1);
-  }
-
-  .footer-links {
-    margin-top: 25px;
-    border-top: 1px solid #333;
-    padding-top: 15px;
-  }
-
-  .link {
-    color: #fbbf24;
-    text-decoration: none;
-    font-size: 0.85rem;
-  }
-
-  .back-link {
-    display: inline-block;
-    margin-top: 10px;
-    color: #888;
-    text-decoration: none;
-    font-size: 0.8rem;
-  }
-
-  @media (max-width: 768px) {
-    .form-container {
-      padding: 10px;
-    }
-    form {
-      padding: 20px 15px;
-      max-width: 90%;
-      border-radius: 12px;
-    }
   }
 </style>

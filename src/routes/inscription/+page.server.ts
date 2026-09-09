@@ -41,7 +41,8 @@ export const actions: Actions = {
                 .from('Joueurs')
                 .upsert({
                     id_joueur: data.user.id,
-                    Surnom: username
+                    Surnom: username,
+                    email: email // <-- Ajouté ici pour reporter l'e-mail automatiquement
                 });
 
             if (profileError) {

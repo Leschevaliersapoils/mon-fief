@@ -20,7 +20,7 @@
             const estAvatarDeBase = String(img.id_race) === String(hero.race?.id_race) && !img.id_heros;
             const estMonAvatarPerso = Number(img.id_heros) === Number(hero.id_heros);
             return estAvatarDeBase || estMonAvatarPerso;
-         }) 
+           }) 
         : []
 );
 
@@ -135,35 +135,37 @@ async function validerModifications() {
 
                 <button class="btn-modifier" onclick={ouvrirMenu}>Modifier le compagnon</button>
 
-                <!-- RÉSEAUX SOCIAUX EN BAS À GAUCHE (Pointent vers /ficheheros/[id]) -->
-                <div class="partage-reseaux-coins">
-                    <!-- Facebook -->
-                    <a href="https://www.facebook.com/sharer/sharer.php?u={encodeURIComponent(urlPartage)}" target="_blank" class="reseau-btn" title="Partager sur Facebook">
-                        <img src="{base}/heros/facebook.png" alt="Facebook" />
-                    </a>
+                <!-- ZONE DU BAS (Réseaux à gauche, Poubelle à droite) -->
+                <div class="bas-de-carte">
+                    <div class="partage-reseaux-coins">
+                        <!-- Facebook -->
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={encodeURIComponent(urlPartage)}" target="_blank" class="reseau-btn" title="Partager sur Facebook">
+                            <img src="{base}/heros/facebook.png" alt="Facebook" />
+                        </a>
 
-                    <!-- Twitter / X -->
-                    <a href="https://twitter.com/intent/tweet?url={encodeURIComponent(urlPartage)}&text=Viens%20d%C3%A9couvrir%20mon%20compagnon%20sur%20le%20jeu%20!" target="_blank" class="reseau-btn" title="Partager sur Twitter / X">
-                        <img src="{base}/heros/twitter.png" alt="Twitter" />
-                    </a>
+                        <!-- Twitter / X -->
+                        <a href="https://twitter.com/intent/tweet?url={encodeURIComponent(urlPartage)}&text=Viens%20d%C3%A9couvrir%20mon%20compagnon%20sur%20le%20jeu%20!" target="_blank" class="reseau-btn" title="Partager sur Twitter / X">
+                            <img src="{base}/heros/twitter.png" alt="Twitter" />
+                        </a>
 
-                    <!-- Instagram -->
-                    <button type="button" onclick={() => { navigator.clipboard.writeText(urlPartage); alert("Lien public copié ! Tu peux le coller sur Instagram."); }} class="reseau-btn" title="Copier le lien pour Instagram">
-                        <img src="{base}/heros/instagram.png" alt="Instagram" />
-                    </button>
+                        <!-- Instagram -->
+                        <button type="button" onclick={() => { navigator.clipboard.writeText(urlPartage); alert("Lien public copié ! Tu peux le coller sur Instagram."); }} class="reseau-btn" title="Copier le lien pour Instagram">
+                            <img src="{base}/heros/instagram.png" alt="Instagram" />
+                        </button>
 
-                    <!-- TikTok -->
-                    <button type="button" onclick={() => { navigator.clipboard.writeText(urlPartage); alert("Lien public copié ! Tu peux le partager sur TikTok."); }} class="reseau-btn" title="Copier le lien pour TikTok">
-                        <img src="{base}/heros/tiktok.png" alt="TikTok" />
-                    </button>
+                        <!-- TikTok -->
+                        <button type="button" onclick={() => { navigator.clipboard.writeText(urlPartage); alert("Lien public copié ! Tu peux le partager sur TikTok."); }} class="reseau-btn" title="Copier le lien pour TikTok">
+                            <img src="{base}/heros/tiktok.png" alt="TikTok" />
+                        </button>
+                    </div>
+
+                    <!-- BOUTON POUBELLE -->
+                    <form method="POST" onsubmit={validerMiseAuRepos}>
+                        <button type="submit" class="btn-delete-corner" title="Mettre au repos">
+                            <span class="icon">🗑️</span>
+                        </button>
+                    </form>
                 </div>
-
-                <!-- BOUTON POUBELLE DANS LE COIN INFÉRIEUR DROIT -->
-                <form method="POST" onsubmit={validerMiseAuRepos}>
-                    <button type="submit" class="btn-delete-corner" title="Mettre au repos">
-                        <span class="icon">🗑️</span>
-                    </button>
-                </form>
 
                 {#if menuOuvert}
                     <div class="modal-overlay">
@@ -240,29 +242,62 @@ async function validerModifications() {
     .page-detail { min-height: 100vh; background-size: cover; background-position: center; }
     .overlay { min-height: 100vh; background: rgba(0,0,0,0.6); padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
     .btn-back { font-family: 'Cinzel', serif; color: #ffd700; text-decoration: none; margin-bottom: 80px; font-size: 1.2rem; text-shadow: 2px 2px 4px #000; z-index: 100; position: relative; }
-    .fiche-parchemin { width: 100%; max-width: 450px; background: #f4e4bc; border: 8px solid #4a3728; padding: 40px; text-align: center; box-shadow: 0 0 40px rgba(0,0,0,0.8); position: relative; }
+    
+    .fiche-parchemin { 
+        width: 100%; 
+        max-width: 450px; 
+        background: #f4e4bc; 
+        border: 8px solid #4a3728; 
+        padding: 40px; 
+        text-align: center; 
+        box-shadow: 0 0 40px rgba(0,0,0,0.8); 
+        position: relative; 
+    }
+    
     .portrait-container { width: 220px; height: 220px; margin: -110px auto 10px; display: flex; justify-content: center; align-items: center; z-index: 10; pointer-events: none; }
     .hero-img-float { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 10px 8px rgba(0,0,0,0.4)); }
+    
+    /* CORRECTION TITRE : Permet le retour à la ligne automatique et évite le débordement */
     .hero-title {
         display: flex; 
         justify-content: center; 
-        align-items: baseline; 
-        gap: 0.5rem; 
+        align-items: center; 
+        gap: 0.4rem; 
         font-family: 'Cinzel', serif; 
         color: #4a3728;
         margin: 10px 0;
+        flex-wrap: wrap; 
     }
+
+    .titre-prefixe, .titre-suffixe {
+        font-size: 0.9rem; 
+        font-weight: bold;
+        text-transform: uppercase;
+        opacity: 0.8;
+    }
+    
+    .nom-principal {
+        font-size: 1.1rem; 
+        letter-spacing: 1px;
+    }
+
     .race-type { color: #5d4635; font-style: italic; margin-bottom: 25px; font-weight: bold; font-size: 1.1rem; }
     .xp-section { margin: 30px 0; }
     .xp-text { font-family: 'Cinzel', serif; font-size: 0.9rem; color: #4a3728; margin-bottom: 8px; }
     .bar-bg { width: 100%; height: 16px; background: #dcd0b9; border: 2px solid #4a3728; border-radius: 8px; overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); }
     .bar-fill { height: 100%; background: linear-gradient(90deg, #b28543, #ffd700); }
 
-    /* BOUTON POUBELLE DANS LE COIN INFÉRIEUR DROIT */
+    /* CONTENEUR DU BAS : Aligne proprement les réseaux à gauche et la poubelle à droite sous le bouton */
+    .bas-de-carte {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 25px;
+        width: 100%;
+    }
+
+    /* BOUTON POUBELLE */
     .btn-delete-corner { 
-        position: absolute; 
-        bottom: 15px; 
-        right: 15px; 
         background: none; 
         border: none; 
         cursor: pointer; 
@@ -270,27 +305,22 @@ async function validerModifications() {
         padding: 5px; 
         opacity: 0.4; 
         transition: all 0.2s; 
-        z-index: 10;
     }
     .btn-delete-corner:hover { 
         opacity: 1; 
         transform: scale(1.2); 
     }
 
-    /* GRILLE DE PARTAGE AGRANDIE DANS LE COIN EN BAS À GAUCHE */
+    /* GRILLE DE PARTAGE */
     .partage-reseaux-coins {
-        position: absolute;
-        bottom: 12px;
-        left: 12px;
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 6px;
-        z-index: 10;
+        gap: 4px;
     }
 
     .reseau-btn {
-        width: 32px;
-        height: 32px;
+        width: 30px;
+        height: 30px;
         background: transparent;
         border: none;
         display: flex;
@@ -298,7 +328,6 @@ async function validerModifications() {
         justify-content: center;
         transition: transform 0.2s;
         padding: 0;
-        opacity: 1;
         cursor: pointer;
     }
 
@@ -307,8 +336,8 @@ async function validerModifications() {
     }
 
     .reseau-btn img {
-        width: 28px;
-        height: 28px;
+        width: 26px;
+        height: 26px;
         object-fit: contain;
     }
 
@@ -323,7 +352,7 @@ async function validerModifications() {
         justify-content: center; 
         align-items: center; 
         z-index: 9999; 
-        padding: 20px; /* Évite de coller aux bords sur les petits écrans */
+        padding: 20px; 
     }
     .modal-content {
         background: #fdf5e6 !important;
@@ -336,16 +365,7 @@ async function validerModifications() {
         max-height: 90vh !important; 
         overflow-y: auto !important; 
     }
-    .titre-prefixe, .titre-suffixe {
-        font-size: 1.0em; 
-        font-weight: bold;
-        text-transform: uppercase;
-        opacity: 0.8;
-    }
-    .nom-principal {
-        font-size: 1.2em; 
-        letter-spacing: 1px;
-    }
+    
     .btn-modifier { background-size: cover; background-position: center; border: 2px solid #4a3728; padding: 10px 20px; cursor: pointer; font-family: 'Cinzel', serif; color: #4a3728; font-weight: bold; border-radius: 5px; transition: transform 0.2s; }
     .btn-modifier:hover { transform: scale(1.05); }
     .actions { margin-top: 10px; display: flex; justify-content: center; gap: 10px; }
@@ -356,14 +376,14 @@ async function validerModifications() {
     .avatar-option input { display: none; }
     .avatar-wrapper { aspect-ratio: 1; border: 3px solid transparent; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; background: #f4e4bc; }
     .avatar-wrapper.selected { border-color: #d4af37; background: #c5b399; }
-    .avatar-wrapper img { width: 90%; object-fit: contain; }
+    .avatar-wrapper img { width: 95%; object-fit: contain; }
     .nom-preview-container {
         display: flex;
         align-items: center;
-        gap: 15px;             
+        gap: 15px;            
         margin-bottom: 25px;
         justify-content: center;
-        flex-wrap: wrap;     
+        flex-wrap: wrap;    
     }
     .nom-preview-container select {
         width: 200px;        

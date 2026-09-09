@@ -29,7 +29,8 @@
         currentPath.endsWith('/') && currentPath.length === base.length + 1 ||
         currentPath.includes('/connexion') || 
         currentPath.includes('/inscription') ||
-        currentPath.includes('/ficheheros')
+        currentPath.includes('/ficheheros') ||
+        currentPath.includes('/guide')
     );
 
     // Le HUD ne s'affiche QUE si l'utilisateur est connecté ET qu'on n'est PAS sur une route sans HUD

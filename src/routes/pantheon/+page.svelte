@@ -6,7 +6,6 @@
   let tousLesHeros = $derived(Array.isArray(data?.topHeros) ? data.topHeros : []);
   let royaumeActifs = $derived(Array.isArray(data?.tousLesHerosActifs) ? data.tousLesHerosActifs : []);
 
-  // Top 3 pour le podium
   let topTrois = $derived(
     tousLesHeros.slice(0, 3).map((heros: any, index: number) => {
       let rangReel = index + 1;
@@ -20,6 +19,8 @@
         ? (estFeminin ? heros.suffixes.texte_feminin : heros.suffixes.texte_masculin) 
         : '';
 
+      let nomJoueur = heros?.Joueurs?.Surnom ? `MAÎTRE : ${heros.Joueurs.Surnom}` : '';
+
       return {
         ...heros,
         rang: rangReel,
@@ -27,7 +28,10 @@
         titreImg: `${base}/pantheon/titre${rangReel}.png`,
         prefixe,
         suffixe,
-        nomUpper: heros?.nom ? heros.nom.toUpperCase() : ''
+        nomUpper: heros?.nom ? heros.nom.toUpperCase() : '',
+        nomJoueur,
+        niveau: heros?.niveau || 1,
+        xpTotal: heros?.experience ? heros.experience.toLocaleString('fr-FR') : '0'
       };
     })
   );
@@ -38,7 +42,6 @@
       : topTrois
   );
 
-  // Suite du classement général à partir du 4e
   let suiteClassement = $derived(
     tousLesHeros.slice(3).map((heros: any, index: number) => {
       let rangReel = index + 4;
@@ -69,7 +72,6 @@
     })
   );
 
-  // Traitement des héros du joueur connecté avec calcul de leur VRAI rang global dans le royaume
   let mesHerosClassement = $derived(
     (Array.isArray(data?.herosPerso) ? data.herosPerso : []).map((heros: any) => {
       let estFeminin = heros?.sexe === 'Femelle' || heros?.sexe === 'F';
@@ -84,7 +86,6 @@
 
       let urlAvatar = heros?.images_profil?.url_image || '';
 
-      // Calcul du vrai rang global : position du chien dans le royaume trié par XP
       let indexGlobal = royaumeActifs.findIndex((h: any) => h.id_heros === heros.id_heros);
       let vraiRang = indexGlobal !== -1 ? indexGlobal + 1 : '-';
 
@@ -138,6 +139,15 @@
                                 </div>
                             </div>
 
+                            <!-- INFORMATIONS COMPLÉMENTAIRES DU PODIUM -->
+                            <div class="podium-info-complementaire">
+                                <span class="badge-niveau">NIV. {heros.niveau}</span>
+                                {#if heros.nomJoueur}
+                                    <span class="texte-maitre">{heros.nomJoueur}</span>
+                                {/if}
+                                <span class="texte-xp">{heros.xpTotal} XP</span>
+                            </div>
+
                         </div>
                     {/each}
                 </div>
@@ -185,7 +195,7 @@
             </div>
         {/if}
 
-        <!-- Panneau : Mon Classement avec le VRAI rang global -->
+        <!-- Panneau : Mon Classement -->
         {#if mesHerosClassement.length > 0}
             <div class="classement-section">
                 <div class="classement-cadre cadre-perso">
@@ -231,7 +241,6 @@
     @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap');
 
     .page-quete { min-height: 100vh; height: auto; background-size: cover; background-position: center; background-attachment: fixed; padding: 40px 20px 80px 20px; position: relative; box-sizing: border-box; }
-    .btn-retour { position: absolute; top: 25px; left: 25px; z-index: 100; text-decoration: none; font-family: 'Cinzel', serif; color: #ffd700; text-shadow: 2px 2px 4px #000; display: flex; align-items: center; gap: 8px; font-size: 0.95rem; }
     .container { max-width: 1400px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
     .main-header { padding-top: 10px; width: 100%; max-width: 700px; display: flex; justify-content: center; align-items: center; margin-bottom: 10px; }
     .banner-img { width: 100%; height: auto; object-fit: contain; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.7)); }
@@ -249,14 +258,53 @@
     .socle-stete { width: 100%; display: flex; justify-content: center; position: relative; z-index: 2; }
     .stele-img { width: 100%; height: auto; object-fit: contain; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)); display: block; }
     
-    .titre-img-wrapper { position: absolute; bottom: 20%; left: 50%; transform: translateX(-50%); width: 85%; max-width: 340px; display: flex; align-items: center; z-index: 10; }
+    .titre-img-wrapper { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); width: 85%; max-width: 340px; display: flex; align-items: center; z-index: 10; }
     .titre-img { width: 100%; height: auto; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.8)); display: block; }
     .texte-sur-image { position: absolute; left: 0; right: 10px; height: 100%; font-family: 'Cinzel', serif; color: #f4e4bc; text-shadow: 2px 2px 4px #000, 0 0 2px #000; display: flex; flex-direction: column; justify-content: center; font-weight: bold; z-index: 11; }
     
-    /* Tailles de texte de base (grand écran) */
-    .ligne-prefixe { font-size: 0.8rem; opacity: 0.9; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: auto; align-self: flex-start; margin-left: 85px; }
-    .ligne-nom { font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: auto; align-self: center; margin-left: 35px; }
-    .ligne-suffixe { font-size: 0.8rem; opacity: 0.9; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: auto; align-self: flex-end; margin-right: 30px; }
+    .ligne-prefixe { font-size: 0.75rem; opacity: 0.9; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: auto; align-self: flex-start; margin-left: 85px; }
+    .ligne-nom { font-size: 0.85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: auto; align-self: center; margin-left: 35px; }
+    .ligne-suffixe { font-size: 0.75rem; opacity: 0.9; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: auto; align-self: flex-end; margin-right: 30px; }
+
+    /* --- Ajustement de la position des infos sous les stèles --- */
+    .podium-info-complementaire {
+        position: absolute;
+        bottom: 2px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1px;
+        z-index: 12;
+        font-family: 'Cinzel', serif;
+        width: 100%;
+        pointer-events: none;
+    }
+
+    .badge-niveau {
+        background: rgba(43, 31, 20, 0.95);
+        color: #ffd700;
+        border: 1px solid #704b2b;
+        padding: 1px 8px;
+        border-radius: 8px;
+        font-size: 0.7rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    }
+
+    .texte-maitre {
+        font-size: 0.7rem;
+        color: #dcd0b9;
+        font-style: italic;
+        text-shadow: 1px 1px 2px #000;
+    }
+
+    .texte-xp {
+        font-size: 0.7rem;
+        color: #ffd700;
+        font-weight: bold;
+        text-shadow: 1px 1px 2px #000;
+    }
 
     /* --- Styles des Tableaux de Classement --- */
     .classement-section { width: 100%; max-width: 900px; margin-top: 30px; margin-bottom: 20px; display: flex; justify-content: center; }
@@ -280,7 +328,6 @@
     .col-niveau { width: 20%; text-align: center; }
     .col-xp { width: 20%; text-align: right; }
 
-    /* --- Adaptation pour écran réduit / mobile --- */
     @media (max-width: 768px) {
         .podium-container { flex-direction: column; align-items: center; gap: 30px; }
         .podium-slot.rang-1 { order: 1; }
@@ -288,7 +335,6 @@
         .podium-slot.rang-3 { order: 3; }
         .podium-slot { max-width: 380px; width: 100%; }
         
-        /* Réduction dynamique de la taille des polices et des marges du bandeau sur mobile */
         .ligne-prefixe { font-size: 0.65rem; margin-left: 65px; }
         .ligne-nom { font-size: 0.75rem; margin-left: 25px; }
         .ligne-suffixe { font-size: 0.65rem; margin-right: 20px; }
