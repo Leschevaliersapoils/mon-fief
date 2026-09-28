@@ -3,6 +3,16 @@
     import { goto } from '$app/navigation';
 
     onMount(() => {
+        // Vigie anti-redirection : si Supabase ramène un type recovery à la racine, on intercepte !
+        const hash = window.location.hash;
+        const search = window.location.search;
+
+        if ((hash && hash.includes('type=recovery')) || (search && search.includes('type=recovery'))) {
+            window.location.href = `/reinitialisation-mot-de-passe${hash || search}`;
+            return;
+        }
+
+        // Gestion classique de ta redirection SPA existante
         const repo = window.location.search;
         if (repo && repo.includes('?p=/')) {
             const redirect = repo.replace('?p=/', '/').replace(/~and~/g, '&');
