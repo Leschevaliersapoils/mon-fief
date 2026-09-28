@@ -3,12 +3,12 @@
     import { goto } from '$app/navigation';
 
     onMount(() => {
-        // Vigie anti-redirection : si Supabase ramène un type recovery à la racine, on intercepte !
-        const hash = window.location.hash;
-        const search = window.location.search;
+        const searchParams = new URLSearchParams(window.location.search);
+        const code = searchParams.get('code');
 
-        if ((hash && hash.includes('type=recovery')) || (search && search.includes('type=recovery'))) {
-            window.location.href = `/reinitialisation-mot-de-passe${hash || search}`;
+        // Si Supabase nous renvoie un code d'authentification à la racine, on l'oriente vers le sésame
+        if (code) {
+            window.location.href = `/reinitialisation-mot-de-passe?code=${code}`;
             return;
         }
 
