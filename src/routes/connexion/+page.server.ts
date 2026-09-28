@@ -32,7 +32,7 @@ export const actions: Actions = {
     }
 
     const { error } = await locals.supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${request.url.origin}${base}/reinitialiser-mot-de-passe`
+        redirectTo: `${request.url.origin}${base}/reinitialisation-mot-de-passe`
     });
 
     if (error) {

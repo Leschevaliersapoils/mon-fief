@@ -30,7 +30,8 @@
         currentPath.includes('/connexion') || 
         currentPath.includes('/inscription') ||
         currentPath.includes('/ficheheros') ||
-        currentPath.includes('/guide')
+        currentPath.includes('/guide')||
+        currentPath.includes('/reinitialisation-mot-de-passe') 
     );
 
     // Le HUD ne s'affiche QUE si l'utilisateur est connecté ET qu'on n'est PAS sur une route sans HUD
