@@ -22,7 +22,7 @@ export const actions: Actions = {
     throw redirect(303, `${base}/cour`);
   },
 
-  rreset: async (event) => {
+  reset: async (event) => {
     const { request, locals } = event;
     const formData = await request.formData();
     const email = formData.get('email') as string;
