@@ -22,7 +22,7 @@ export const actions: Actions = {
     throw redirect(303, `${base}/cour`);
   },
 
-  reset: async (event) => {
+  rreset: async (event) => {
     const { request, locals } = event;
     const formData = await request.formData();
     const email = formData.get('email') as string;
@@ -31,8 +31,12 @@ export const actions: Actions = {
         return fail(400, { error: 'Veuillez renseigner votre e-mail pour retrouver votre chemin, Messire.' });
     }
 
+    // On transforme request.url en objet URL pour récupérer l'origine proprement
+    const url = new URL(request.url);
+    const redirectTo = `${url.origin}${base}/reinitialisation-mot-de-passe`;
+
     const { error } = await locals.supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${request.url.origin}${base}/reinitialisation-mot-de-passe`
+        redirectTo: redirectTo
     });
 
     if (error) {
