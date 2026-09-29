@@ -1,96 +1,144 @@
-<script>
-    import { onMount } from 'svelte';
-    import { goto } from '$app/navigation';
+<script lang="ts">
+  import { base } from '$app/paths';
+  import { enhance } from '$app/forms';
+  import { onMount } from 'svelte';
+  import { supabase } from '$lib/supabase';
 
-    onMount(() => {
-        const searchParams = new URLSearchParams(window.location.search);
-        const code = searchParams.get('code');
+  let { form } = $props();
+  let sessionLoaded = $state(false);
+  let errorMessage = $state(form?.error);
 
-        // Si Supabase nous renvoie un code d'authentification à la racine, on l'oriente vers le sésame
-        if (code) {
-            window.location.href = `/reinitialisation-mot-de-passe?code=${code}`;
-            return;
-        }
+  onMount(async () => {
+    // 1. On récupère les paramètres de l'URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
 
-        // Gestion classique de ta redirection SPA existante
-        const repo = window.location.search;
-        if (repo && repo.includes('?p=/')) {
-            const redirect = repo.replace('?p=/', '/').replace(/~and~/g, '&');
-            goto(redirect, { replaceState: true });
-        }
-    });
+    if (code) {
+      // 2. Si un code PKCE est présent, on l'échange contre une session Supabase valide
+      const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
+      if (exchangeError) {
+        errorMessage = "Le lien de réinitialisation est invalide ou a expiré, Messire.";
+        return;
+      }
+    }
+
+    // 3. On vérifie ensuite que la session est bien active
+    const { data, error } = await supabase.auth.getSession();
+    
+    if (error || !data.session) {
+      errorMessage = "Aucune session de réinitialisation active, Messire.";
+    } else {
+      sessionLoaded = true;
+    }
+  });
 </script>
 
-<div class="page-container">
-  <nav class="navbar">
-    <div class="nav-left">
-      <a href="/">
-        <img src="/Logo.png" alt="Logo Les Chevaliers à Poils" class="nav-logo" />
-      </a>
-      <span class="site-title">Les Chevaliers à Poils</span>
-    </div>
-    
-    <div class="nav-right">
-      <a href="/guide">Comment ça marche</a>
-      <a href="/inscription">S'inscrire</a>
-      <a href="/connexion" class="btn-login" style="text-decoration: none;">Se connecter</a>
-    </div>
-  </nav>
+<div class="form-container" style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('{base}/Fondaccueil.jpg');">
+  <form method="POST" action="?/updatePassword" use:enhance>
+    <h1>Nouveau Sésame</h1>
+    <p>Choisissez un nouveau mot de passe pour votre compte, Messire.</p>
 
-  <header class="hero-section" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('/Fondaccueil.jpg');">
-    <div class="hero-content">
-      <h1 class="main-title">Les Chevaliers à Poils</h1>
-      <p class="subtitle">
-        Votre animal de compagnie est un héros qui s'ignore. 
-        Relevez des défis épiques, montez de niveau et devenez une légende du royaume !
+    {#if errorMessage}
+      <p style="color: #ff4d4d; background: rgba(255,0,0,0.1); padding: 10px; border-radius: 5px; font-size: 0.8rem; margin-bottom: 20px;">
+        ⚠️ {errorMessage}
       </p>
-      <a href="/connexion" class="btn-adventure" style="text-decoration: none; display: inline-block;">⚔️ Entrer dans l'aventure</a>
-    </div>
-  </header>
+    {/if}
+
+    {#if sessionLoaded}
+      <div class="input-group">
+        <label for="password">Nouveau mot de passe</label>
+        <input type="password" id="password" name="password" placeholder="••••••••" required minlength="6" />
+      </div>
+
+      <button type="submit" class="btn-submit">Mettre à jour le mot de passe 🛡️</button>
+    {/if}
+  </form>
 </div>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Poppins:wght@300;400;600&display=swap');
+  /* Garde exactement ton bloc style actuel */
+  .form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100vw;
+    background-size: cover;
+    background-position: center;
+    box-sizing: border-box;
+    padding: 15px;
+  }
 
-  :global(body) { margin: 0; padding: 0; overflow-x: hidden; font-family: 'Poppins', sans-serif; }
+  form {
+    background: rgba(20, 20, 20, 0.85);
+    padding: 40px;
+    border-radius: 12px;
+    border: 1px solid #c5a059;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    color: #f0f0f0;
+    font-family: serif;
+    box-sizing: border-box;
+  }
 
-  .page-container { height: 100vh; width: 100vw; }
+  h1 {
+    text-align: center;
+    color: #c5a059;
+    margin-bottom: 10px;
+  }
 
-  .hero-section { height: 100vh; width: 100%; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; text-align: center; color: white; }
+  p {
+    text-align: center;
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+    color: #b0b0b0;
+  }
 
-  .navbar { position: absolute; top: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 20px 0; z-index: 10; box-sizing: border-box; }
+  .input-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
 
-  .nav-left, .nav-right { margin: 0 60px; display: flex; align-items: center; gap: 30px; }
+  label {
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: #d4af37;
+  }
 
-  .nav-left { color: white; gap: 15px; }
+  input {
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #444;
+    background: #2a2a2a;
+    color: #fff;
+    font-size: 1rem;
+    box-sizing: border-box;
+    width: 100%;
+  }
 
-  .nav-logo { height: 120px; width: 120px; object-fit: contain; }
+  input:focus {
+    outline: none;
+    border-color: #c5a059;
+  }
 
-  .site-title { font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: bold; text-shadow: 2px 2px 4px #000; }
+  .btn-submit {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background: #c5a059;
+    color: #121212;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    box-sizing: border-box;
+  }
 
-  .nav-right a { color: white; text-decoration: none; font-size: 0.9rem; text-shadow: 2px 2px 4px #000; }
-
-  .btn-login { background: #3a7a34; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: 600; cursor: pointer; }
-
-  .hero-content { max-width: 850px; padding: 0 20px; margin-top: 150px; }
-
-  .main-title { font-family: 'Cinzel', serif; font-size: 5rem; margin-bottom: 20px; line-height: 1; text-shadow: 2px 2px 8px #000; }
-
-  .subtitle { font-size: 1.3rem; margin-bottom: 40px; font-weight: 300; text-shadow: 1px 1px 4px #000; }
-
-  .btn-adventure { background: #3a7a34; color: white; border: none; padding: 20px 45px; font-size: 1.2rem; font-weight: bold; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-
-  /* --- VERSION MOBILE --- */
-  @media (max-width: 768px) {
-    .navbar { padding: 10px 15px; margin: 0; width: 100%; }
-    .nav-left, .nav-right { margin: 0; gap: 15px; }
-    .site-title { display: none; }
-    .nav-logo { height: 95px; width: 95px; }
-    .nav-right a { font-size: 0.8rem; }
-    .btn-login { display: none; }
-    .main-title { font-size: 2.8rem; }
-    .subtitle { font-size: 1rem; }
-    .hero-content { margin-top: 100px; }
-    .btn-adventure { padding: 15px 30px; font-size: 1rem; }
+  .btn-submit:hover {
+    background: #d4af37;
   }
 </style>
