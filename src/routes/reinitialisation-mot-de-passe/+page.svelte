@@ -9,11 +9,24 @@
   let errorMessage = $state(form?.error);
 
   onMount(async () => {
-    // Récupère et enregistre la session depuis le jeton de l'URL (#access_token=...)
+    // 1. On récupère les paramètres de l'URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+
+    if (code) {
+      // 2. Si un code PKCE est présent, on l'échange contre une session Supabase valide
+      const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
+      if (exchangeError) {
+        errorMessage = "Le lien de réinitialisation est invalide ou a expiré, Messire.";
+        return;
+      }
+    }
+
+    // 3. On vérifie ensuite que la session est bien active
     const { data, error } = await supabase.auth.getSession();
     
     if (error || !data.session) {
-      errorMessage = "Le lien de réinitialisation est invalide ou a expiré, Messire.";
+      errorMessage = "Aucune session de réinitialisation active, Messire.";
     } else {
       sessionLoaded = true;
     }
@@ -43,6 +56,7 @@
 </div>
 
 <style>
+  /* Garde exactement ton bloc style actuel */
   .form-container {
     display: flex;
     justify-content: center;
