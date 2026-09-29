@@ -17,6 +17,7 @@ export const load: LayoutServerLoad = async ({ locals, url }) => {
         `${baseClean}/connexion`,
         `${baseClean}/guide`,
         `${baseClean}/test-supabase`,
+        `${baseClean}/reinitialisation-mot-de-passe`,
     ];
 
     // On vérifie si le chemin actuel correspond à l'une des pages publiques
